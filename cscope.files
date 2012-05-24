@@ -1,8 +1,0 @@
-./src/http.c
-./src/http.h
-./src/list.c
-./src/list.h
-./src/msg.c
-./src/msg.h
-./src/utils.c
-./src/utils.h
