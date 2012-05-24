@@ -3,6 +3,9 @@ mpdcoverart
 
 a simple widget show the music cover art and download the cover from music.douban.com
 
+#preview
+![screenshot](https://github.com/tnrazy/mpdcoverart/blob/master/preview.png)
+
 Config:
 	conf
 
