@@ -181,6 +181,12 @@ static void s_menu_skin(GtkWidget *widget, GdkEventButton *event)
 	/* change skin */
 	if(strcmp(new_skin_name, ui_get_current_skin()->name))
 	{
+<<<<<<< HEAD
+=======
+		ui_update(new_skin_name);
+
+		/* save skin name */
+>>>>>>> tnrazy/master
 		cfg_set_skinname((char *)new_skin_name);
 
 		ui_update(new_skin_name);

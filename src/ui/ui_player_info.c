@@ -91,10 +91,18 @@ static GtkWidget *ui_make_label(struct ui_skin_label *label, char *str)
 	GtkWidget *widget;
 	char format[512];
 
+<<<<<<< HEAD
 	if(label->enable != 1)
 	{
 		return NULL;
 	}
+=======
+	/* draw the label with null */
+	//if(label->enable != 1)
+	//{
+	//	return NULL;
+	//}
+>>>>>>> tnrazy/master
 
 	str = str ? str : INFO_NA;
 
