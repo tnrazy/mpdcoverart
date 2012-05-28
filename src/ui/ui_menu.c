@@ -183,6 +183,7 @@ static void s_menu_skin(GtkWidget *widget, GdkEventButton *event)
 	{
 		ui_update(new_skin_name);
 
+		/* save skin name */
 		cfg_set_skinname((char *)new_skin_name);
 	}
 }
