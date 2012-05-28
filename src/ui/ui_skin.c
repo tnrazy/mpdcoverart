@@ -56,7 +56,13 @@ void ui_skin_free(struct ui_skin *ptr)
 	if(ptr->name)
 		free(ptr->name);
 
-	free(ptr->albumcover);
+	if(ptr->albumcover)
+	{
+		if(ptr->albumcover->nocover)
+			free(ptr->albumcover->nocover);
+
+		free(ptr->albumcover);
+	}
 
 	ui_skin_image_free(ptr->img_case);
 	ui_skin_image_free(ptr->img_next);
@@ -66,7 +72,6 @@ void ui_skin_free(struct ui_skin *ptr)
 	ui_skin_label_free(ptr->title);
 	ui_skin_label_free(ptr->artist);
 	ui_skin_label_free(ptr->album);
-
 
 	free(ptr);
 }

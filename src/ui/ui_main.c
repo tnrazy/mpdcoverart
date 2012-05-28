@@ -12,6 +12,7 @@
 #include "ui.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <pthread.h>
 #include <gtk/gtk.h>
 
@@ -19,6 +20,8 @@ static int ui_poll(GtkWidget *widget);
 
 void ui_load()
 {
+	char *skin_name;
+
 	GtkWidget *window;
 	GtkWidget *fixed;
 	GtkWidget *cover_container;
@@ -27,7 +30,9 @@ void ui_load()
 
 	gtk_init(NULL, NULL);
 
-	a_skin = ui_get_current_skin();
+	skin_name = cfg_get_skinname();
+
+	a_skin = ui_skin_load(skin_name);
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
@@ -40,6 +45,8 @@ void ui_load()
 
 	/* remove the taskbar */
 	gtk_window_set_skip_taskbar_hint(GTK_WINDOW(window), TRUE);
+
+	gtk_window_set_keep_below(GTK_WINDOW(window), TRUE);
 
 	gtk_widget_set_uposition(window, cfg_get_pos_x(), cfg_get_pos_y());
 
@@ -64,7 +71,7 @@ void ui_load()
 
 	ui_set_transparent(window, NULL, NULL);
 
-	ui_update();
+	ui_update(NULL);
 
 	g_timeout_add(1000, (GSourceFunc)ui_poll, NULL);
 
@@ -72,16 +79,24 @@ void ui_load()
 
 	gtk_widget_show_all(window);
 
+	free(skin_name);
+
 	gtk_main();
 }
 
 static struct player_music_info *old_info = NULL;
 
-void ui_update()
+void ui_update(const char *skin_name)
 {
 	struct player_music_info *info;
 
 	info = player_get_music_info();
+
+	if(skin_name)
+	{
+		/* change skin */
+		ui_skin_load(skin_name);
+	}
 
 	/* refresh ui info */
 	ui_player_info_update(info);
@@ -123,7 +138,7 @@ static int ui_poll(GtkWidget *widget)
 		return TRUE;
 	}
 
-	ui_update(new_info);
+	ui_update(NULL);
 
 	player_music_info_free(old_info);
 

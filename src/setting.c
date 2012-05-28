@@ -214,6 +214,11 @@ void cfg_set_postion_lock()
 	cfg_set(CFG_POSITION_LOCK, format);
 }
 
+void cfg_set_skinname(char *skin_name)
+{
+	cfg_set(CFG_SKINNAME, skin_name);
+}
+
 unsigned int cfg_get_pos_lock()
 {
 	char *value = cfg_get(CFG_POSITION_LOCK);

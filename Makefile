@@ -45,5 +45,5 @@ cscope:
 
 clean:
 	-find -name "*.o" -exec rm {} \;
-	-rm main
 	-rm test
+	-rm $(BINNAME)

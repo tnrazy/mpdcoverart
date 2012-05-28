@@ -78,6 +78,8 @@ struct ui_skin *ui_skin_load();
 
 struct ui_skin_entity **ui_skin_load_all();
 
+void ui_skin_entity_free(struct ui_skin_entity *ptr);
+
 void ui_cover_init(GtkWidget *fixed, GtkWidget *cover_container);
 
 void ui_cover_update(struct player_music_info *info);
@@ -94,7 +96,7 @@ void ui_menu_init(GtkWidget *menu_container);
 
 void ui_load();
 
-void ui_update();
+void ui_update(const char *skin_name);
 
 int ui_set_transparent(GtkWidget *widget, GdkScreen *old_screen, void *data);
 

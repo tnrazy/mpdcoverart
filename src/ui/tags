@@ -4,24 +4,30 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-DEF_SKIN	ui.h	70;"	d
-LAB_FORMAT	ui_player_info.c	15;"	d	file:
-UI_H	ui.h	10;"	d
+DEF_SKIN	ui.h	71;"	d
+INFO_NA	ui_player_info.c	17;"	d	file:
+LAB_FORMAT	ui_player_info.c	16;"	d	file:
+UI_H	ui.h	11;"	d
 album	ui.h	/^	struct ui_skin_label *album;$/;"	m	struct:ui_skin	typeref:struct:ui_skin::ui_skin_label	access:public
 albumcover	ui.h	/^	struct ui_skin_albumcover *albumcover;$/;"	m	struct:ui_skin	typeref:struct:ui_skin::ui_skin_albumcover	access:public
 align	ui.h	/^	float align;$/;"	m	struct:ui_skin_label	access:public
 artist	ui.h	/^	struct ui_skin_label *artist;$/;"	m	struct:ui_skin	typeref:struct:ui_skin::ui_skin_label	access:public
 color	ui.h	/^	char *color;$/;"	m	struct:ui_skin_label	access:public
 container	ui_cover.c	/^static GtkWidget *container;$/;"	v	file:
+container	ui_player_control.c	/^static GtkWidget *container;$/;"	v	file:
 current_skin	ui_skin.c	/^static struct ui_skin *current_skin;$/;"	v	typeref:struct:ui_skin	file:
 e_img_btn_handle	ui_player_control.c	/^static int e_img_btn_handle(GtkWidget *widget, GdkEventButton *event, void *data)$/;"	f	file:	signature:(GtkWidget *widget, GdkEventButton *event, void *data)
 e_img_btn_handle	ui_player_control.c	/^static int e_img_btn_handle(GtkWidget *widget, GdkEventButton *event, void *data);$/;"	p	file:	signature:(GtkWidget *widget, GdkEventButton *event, void *data)
+e_menu_popup	ui_menu.c	/^static int e_menu_popup(GtkWidget *widget, GdkEventButton *event, void *data)$/;"	f	file:	signature:(GtkWidget *widget, GdkEventButton *event, void *data)
+e_menu_popup	ui_menu.c	/^static int e_menu_popup(GtkWidget *widget, GdkEventButton *event, void *data);$/;"	p	file:	signature:(GtkWidget *widget, GdkEventButton *event, void *data)
 e_player_next	ui_player_control.c	/^static int e_player_next(GtkWidget *widget, GdkEventButton *event, void *data)$/;"	f	file:	signature:(GtkWidget *widget, GdkEventButton *event, void *data)
 e_player_next	ui_player_control.c	/^static int e_player_next(GtkWidget *widget, GdkEventButton *event, void *data);$/;"	p	file:	signature:(GtkWidget *widget, GdkEventButton *event, void *data)
 e_player_prev	ui_player_control.c	/^static int e_player_prev(GtkWidget *widget, GdkEventButton *event, void *data)$/;"	f	file:	signature:(GtkWidget *widget, GdkEventButton *event, void *data)
 e_player_prev	ui_player_control.c	/^static int e_player_prev(GtkWidget *widget, GdkEventButton *event, void *data);$/;"	p	file:	signature:(GtkWidget *widget, GdkEventButton *event, void *data)
 e_player_status	ui_player_control.c	/^static int e_player_status(GtkWidget *widget, GdkEventButton *event, void *data)$/;"	f	file:	signature:(GtkWidget *widget, GdkEventButton *event, void *data)
 e_player_status	ui_player_control.c	/^static int e_player_status(GtkWidget *widget, GdkEventButton *event, void *data);$/;"	p	file:	signature:(GtkWidget *widget, GdkEventButton *event, void *data)
+e_window_drag	ui_menu.c	/^static int e_window_drag(GtkWidget *widget, GdkEventButton *event, void *data)$/;"	f	file:	signature:(GtkWidget *widget, GdkEventButton *event, void *data)
+e_window_drag	ui_menu.c	/^static int e_window_drag(GtkWidget *widget, GdkEventButton *event, void *data);$/;"	p	file:	signature:(GtkWidget *widget, GdkEventButton *event, void *data)
 enable	ui.h	/^	int enable;$/;"	m	struct:ui_skin_label	access:public
 font	ui.h	/^	char *font;$/;"	m	struct:ui_skin_label	access:public
 height	ui.h	/^	int height;$/;"	m	struct:ui_skin	access:public
@@ -35,8 +41,10 @@ lab_album	ui_player_info.c	/^static GtkWidget *lab_album;$/;"	v	file:
 lab_artist	ui_player_info.c	/^static GtkWidget *lab_artist;$/;"	v	file:
 lab_title	ui_player_info.c	/^static GtkWidget *lab_title;$/;"	v	file:
 max_char	ui.h	/^	int max_char;$/;"	m	struct:ui_skin_label	access:public
+mutex	ui_main.c	/^static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;$/;"	v	file:
 name	ui.h	/^	char *name;$/;"	m	struct:ui_skin	access:public
 nocover	ui.h	/^	char *nocover;$/;"	m	struct:ui_skin_albumcover	access:public
+old_info	ui_main.c	/^static struct player_music_info *old_info = NULL;$/;"	v	typeref:struct:player_music_info	file:
 s_menu_lock	ui_menu.c	/^static void s_menu_lock(GtkWidget *widget, GdkEventButton *event)$/;"	f	file:	signature:(GtkWidget *widget, GdkEventButton *event)
 s_menu_lock	ui_menu.c	/^static void s_menu_lock(GtkWidget *widget, GdkEventButton *event);$/;"	p	file:	signature:(GtkWidget *widget, GdkEventButton *event)
 s_menu_quit	ui_menu.c	/^static void s_menu_quit(GtkWidget *widget, GdkEventButton *event)$/;"	f	file:	signature:(GtkWidget *widget, GdkEventButton *event)
@@ -60,15 +68,17 @@ ui_make_img_btn	ui_player_control.c	/^static GtkWidget *ui_make_img_btn(char *im
 ui_make_label	ui_player_info.c	/^static GtkWidget *ui_make_label(struct ui_skin_label *label, char *str)$/;"	f	file:	signature:(struct ui_skin_label *label, char *str)
 ui_make_label	ui_player_info.c	/^static GtkWidget *ui_make_label(struct ui_skin_label *label, char *str);$/;"	p	file:	signature:(struct ui_skin_label *label, char *str)
 ui_menu_init	ui.h	/^void ui_menu_init(GtkWidget *menu_container);$/;"	p	signature:(GtkWidget *menu_container)
-ui_menu_init	ui_menu.c	/^void ui_menu_init(GtkWidget *menu_container)$/;"	f	signature:(GtkWidget *menu_container)
-ui_menu_popup	ui_menu.c	/^static int ui_menu_popup(GtkWidget *widget, GdkEventButton *event, void *data)$/;"	f	file:	signature:(GtkWidget *widget, GdkEventButton *event, void *data)
-ui_menu_popup	ui_menu.c	/^static int ui_menu_popup(GtkWidget *widget, GdkEventButton *event, void *data);$/;"	p	file:	signature:(GtkWidget *widget, GdkEventButton *event, void *data)
+ui_menu_init	ui_menu.c	/^void ui_menu_init(GtkWidget *container)$/;"	f	signature:(GtkWidget *container)
 ui_player_control_init	ui.h	/^void ui_player_control_init(GtkWidget *fixed);$/;"	p	signature:(GtkWidget *fixed)
 ui_player_control_init	ui_player_control.c	/^void ui_player_control_init(GtkWidget *fixed)$/;"	f	signature:(GtkWidget *fixed)
+ui_player_control_update	ui.h	/^void ui_player_control_update();$/;"	p	signature:()
+ui_player_control_update	ui_player_control.c	/^void ui_player_control_update()$/;"	f
 ui_player_info_init	ui.h	/^void ui_player_info_init(GtkWidget *fixed);$/;"	p	signature:(GtkWidget *fixed)
 ui_player_info_init	ui_player_info.c	/^void ui_player_info_init(GtkWidget *fixed)$/;"	f	signature:(GtkWidget *fixed)
 ui_player_info_update	ui.h	/^void ui_player_info_update(struct player_music_info *info);$/;"	p	signature:(struct player_music_info *info)
 ui_player_info_update	ui_player_info.c	/^void ui_player_info_update(struct player_music_info *info)$/;"	f	signature:(struct player_music_info *info)
+ui_poll	ui_main.c	/^static int ui_poll(GtkWidget *widget)$/;"	f	file:	signature:(GtkWidget *widget)
+ui_poll	ui_main.c	/^static int ui_poll(GtkWidget *widget);$/;"	p	file:	signature:(GtkWidget *widget)
 ui_set_transparent	ui.h	/^int ui_set_transparent(GtkWidget *widget, GdkScreen *old_screen, void *data);$/;"	p	signature:(GtkWidget *widget, GdkScreen *old_screen, void *data)
 ui_set_transparent	ui_misc.c	/^int ui_set_transparent(GtkWidget *widget, GdkScreen *old_screen, void *data)$/;"	f	signature:(GtkWidget *widget, GdkScreen *old_screen, void *data)
 ui_skin	ui.h	/^struct ui_skin$/;"	s
@@ -127,6 +137,8 @@ ui_skin_read_integer	ui_skin.c	/^static int ui_skin_read_integer(xmlNode *root, 
 ui_skin_read_integer	ui_skin.c	/^static int ui_skin_read_integer(xmlNode *root, char *node_name, char *attr_name, int *i);$/;"	p	file:	signature:(xmlNode *root, char *node_name, char *attr_name, int *i)
 ui_skin_read_string	ui_skin.c	/^static char *ui_skin_read_string(xmlNode *root, char *node_name, char *attr_name, char **s)$/;"	f	file:	signature:(xmlNode *root, char *node_name, char *attr_name, char **s)
 ui_skin_read_string	ui_skin.c	/^static char *ui_skin_read_string(xmlNode *root, char *node_name, char *attr_name, char **s);$/;"	p	file:	signature:(xmlNode *root, char *node_name, char *attr_name, char **s)
+ui_update	ui.h	/^void ui_update(char *skin_name);$/;"	p	signature:(char *skin_name)
+ui_update	ui_main.c	/^void ui_update(char *skin_name)$/;"	f	signature:(char *skin_name)
 width	ui.h	/^	int width;$/;"	m	struct:ui_skin	access:public
 width	ui.h	/^	int width;$/;"	m	struct:ui_skin_albumcover	access:public
 x	ui.h	/^	int x;$/;"	m	struct:ui_skin_albumcover	access:public

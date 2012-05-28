@@ -120,12 +120,12 @@ static int e_img_btn_handle(GtkWidget *widget, GdkEventButton *event, void *data
 
 	if(event->type == GDK_ENTER_NOTIFY)
 	{
-		//change the cursor
+		gdk_window_set_cursor(widget->window, gdk_cursor_new(GDK_HAND1));
 	}
 
 	else if(event->type == GDK_LEAVE_NOTIFY)
 	{
-		//change the cursor
+		gdk_window_set_cursor(widget->window, gdk_cursor_new(GDK_LEFT_PTR));
 	}
 
 	return FALSE;
@@ -138,7 +138,7 @@ static int e_player_status(GtkWidget *widget, GdkEventButton *event, void *data)
 		return FALSE;
 	}
 
-	ui_update();
+	ui_update(NULL);
 
 	return TRUE;
 }
@@ -152,7 +152,7 @@ static int e_player_next(GtkWidget *widget, GdkEventButton *event, void *data)
 	}
 
 	/* refresh ui info */
-	ui_update();
+	ui_update(NULL);
 
 	return TRUE;
 }
@@ -165,7 +165,7 @@ static int e_player_prev(GtkWidget *widget, GdkEventButton *event, void *data)
 		return FALSE;
 	}
 
-	ui_update();
+	ui_update(NULL);
 
 	return TRUE;
 }

@@ -58,4 +58,6 @@ void cfg_set_postion(char *xy);
 
 void cfg_set_postion_lock();
 
+void cfg_set_skinname(char *skin_name);
+
 #endif

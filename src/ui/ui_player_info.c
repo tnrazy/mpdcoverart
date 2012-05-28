@@ -44,40 +44,46 @@ void ui_player_info_init(GtkWidget *fixed)
 
 void ui_player_info_update(struct player_music_info *info)
 {
-	char format[512];
+	char *markup = NULL;
 	struct ui_skin *a_skin;
 
 	a_skin = ui_get_current_skin();
 
 	if(a_skin->artist->enable == 1)
 	{
-		snprintf(format, sizeof format, LAB_FORMAT, 
-		  			a_skin->artist->color, 
-		  			a_skin->artist->font, 
-		  			info->artist ? info->artist : INFO_NA);
+		markup = g_markup_printf_escaped(LAB_FORMAT, a_skin->artist->color, a_skin->artist->font, info->artist ? info->artist : INFO_NA);
 
-		gtk_label_set_markup(GTK_LABEL(lab_artist), format);
+		gtk_label_set_markup(GTK_LABEL(lab_artist), markup);
+
+		g_free(markup);
 	}
+
+	else if(lab_artist)
+		gtk_label_set_label(GTK_LABEL(lab_artist), NULL);
 
 	if(a_skin->title->enable == 1)
 	{
-		snprintf(format, sizeof format, LAB_FORMAT, 
-		  			a_skin->title->color, 
-		  			a_skin->title->font, 
-		  			info->title ? info->title : INFO_NA);
+		markup = g_markup_printf_escaped(LAB_FORMAT, a_skin->title->color, a_skin->title->font, info->title ? info->title : INFO_NA);
 
-		gtk_label_set_markup(GTK_LABEL(lab_title), format);
+		gtk_label_set_markup(GTK_LABEL(lab_title), markup);
+
+		g_free(markup);
 	}
+
+	else if(lab_title)
+		gtk_label_set_label(GTK_LABEL(lab_title), NULL);
 
 	if(a_skin->album->enable == 1)
 	{
-		snprintf(format, sizeof format, LAB_FORMAT, 
-		  			a_skin->album->color, 
-		  			a_skin->album->font, 
-		  			info->album ? info->album : INFO_NA);
+		markup = g_markup_printf_escaped(LAB_FORMAT, a_skin->album->color, a_skin->album->font, info->album ? info->album : INFO_NA);
 
-		gtk_label_set_markup(GTK_LABEL(lab_album), format);
+		gtk_label_set_markup(GTK_LABEL(lab_album), markup);
+
+		g_free(markup);
 	}
+
+	else if(lab_album)
+		gtk_label_set_text(GTK_LABEL(lab_album), NULL);
 }
 
 static GtkWidget *ui_make_label(struct ui_skin_label *label, char *str)
@@ -85,10 +91,10 @@ static GtkWidget *ui_make_label(struct ui_skin_label *label, char *str)
 	GtkWidget *widget;
 	char format[512];
 
-	if(label->enable != 1)
-	{
-		return NULL;
-	}
+	//if(label->enable != 1)
+	//{
+	//	return NULL;
+	//}
 
 	str = str ? str : INFO_NA;
 

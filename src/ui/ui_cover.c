@@ -82,6 +82,7 @@ void ui_cover_update(struct player_music_info *info)
 	gtk_widget_show(new_cover);
 
 	free(cover_src);
+
 	g_object_unref(pixbuf);
 	g_object_unref(scalebuf);
 }
