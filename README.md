@@ -13,6 +13,3 @@ a simple widget show the music cover art and download the cover from music.douba
 ####
 copy conf to $XDG_CONFIG_HOME/mpdcoverart or ~/.mpdcoverart
 ####
-skin path /usr/share/mpdcoverart/
-####
-cover path ~/.covers
