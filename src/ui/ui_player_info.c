@@ -91,6 +91,7 @@ static GtkWidget *ui_make_label(struct ui_skin_label *label, char *str)
 	GtkWidget *widget;
 	char format[512];
 
+	/* draw the label with null */
 	//if(label->enable != 1)
 	//{
 	//	return NULL;
