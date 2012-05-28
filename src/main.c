@@ -8,6 +8,7 @@
  */
 
 #include "msg.h"
+#include "setting.h"
 #include "ui.h"
 
 #include <stdlib.h>
@@ -18,6 +19,8 @@ int main(int argc, const char **argv)
 {
 	if(signal(SIGHUP, SIG_IGN) == SIG_ERR)
 		die("signal() error.");
+
+	char *skin_name;
 
 	switch(fork())
 	{
@@ -33,6 +36,12 @@ int main(int argc, const char **argv)
 	setsid();
 
 	chdir("/");
+
+	skin_name = cfg_get_skinname();
+
+	ui_skin_load(skin_name);
+
+	free(skin_name);
 
 	ui_load();
 

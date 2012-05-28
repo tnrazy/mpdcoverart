@@ -18,10 +18,10 @@
 
 static int ui_poll(GtkWidget *widget);
 
+static GtkWidget *main_win;
+
 void ui_load()
 {
-	char *skin_name;
-
 	GtkWidget *window;
 	GtkWidget *fixed;
 	GtkWidget *cover_container;
@@ -30,9 +30,7 @@ void ui_load()
 
 	gtk_init(NULL, NULL);
 
-	skin_name = cfg_get_skinname();
-
-	a_skin = ui_skin_load(skin_name);
+	a_skin = ui_get_current_skin();
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
@@ -79,7 +77,7 @@ void ui_load()
 
 	gtk_widget_show_all(window);
 
-	free(skin_name);
+	main_win = window;
 
 	gtk_main();
 }
@@ -92,10 +90,20 @@ void ui_update(const char *skin_name)
 
 	info = player_get_music_info();
 
+	/* change skin */
 	if(skin_name)
 	{
-		/* change skin */
+		/* destroy current window */
+		gtk_widget_destroy(main_win);
+
+		/* exit gtk loop */
+		gtk_main_quit();
+
+		/* reload skin */
 		ui_skin_load(skin_name);
+
+		/* draw window */
+		ui_load();
 	}
 
 	/* refresh ui info */

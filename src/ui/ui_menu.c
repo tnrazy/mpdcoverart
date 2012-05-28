@@ -181,8 +181,8 @@ static void s_menu_skin(GtkWidget *widget, GdkEventButton *event)
 	/* change skin */
 	if(strcmp(new_skin_name, ui_get_current_skin()->name))
 	{
-		ui_update(new_skin_name);
-
 		cfg_set_skinname((char *)new_skin_name);
+
+		ui_update(new_skin_name);
 	}
 }
