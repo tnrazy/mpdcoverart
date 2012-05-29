@@ -1,9 +1,8 @@
-
 [LOGFILE]
 log_file=/tmp/mpdcover.log
 
 [COVERPATH]
-cover_path=~/.cover/
+cover_path=~/.covers/
 
 [MUSICPATH]
 music_path=/media/Music/
