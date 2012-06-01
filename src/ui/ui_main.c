@@ -106,13 +106,14 @@ void ui_update(const char *skin_name)
 		ui_load();
 	}
 
-	/* refresh ui info */
-	ui_player_info_update(info);
+	/* refresh control */
 	ui_player_control_update();
 
-	/* will be blocking */
-	ui_cover_update(info);
+	/* refresh ui info */
+	ui_player_info_update(info);
 
+	/* refresh cover */
+	ui_cover_update(info);
 	//player_music_info_free(info);
 	
 	old_info = info;

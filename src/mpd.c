@@ -21,7 +21,7 @@ struct mpd_connection *mpd_get_connection()
     	struct mpd_connection *conn;
 
 	conn = mpd_connection_new(NULL, 0, 3000);
-	if(conn == NULL)
+	if(NULL == conn)
 	{
 		_ERROR("Mpd connection error.");
 		return NULL;
@@ -45,9 +45,14 @@ struct mpd_status *mpd_get_status()
 
 	conn = mpd_get_connection();
 
+	if(NULL == conn)
+	{
+		return NULL;
+	}
+
 	status = mpd_run_status(conn);
 
-	if(status == NULL)
+	if(NULL == status)
 	{
 		_ERROR("%s", mpd_connection_get_error_message(conn));
 		return NULL;
@@ -66,8 +71,13 @@ struct mpd_song *mpd_get_song()
 
 	conn = mpd_get_connection();
 
+	if(NULL == conn)
+	{
+		return NULL;
+	}
+
 	song = mpd_run_current_song(conn);
-	if(song == NULL)
+	if(NULL == song)
 	{
 		_ERROR("%s", mpd_connection_get_error_message(conn));
 
@@ -93,23 +103,40 @@ const char *mpd_song_tag(const struct mpd_song *song, enum mpd_tag_type type)
 
 enum player_status player_get_status()
 {
+	enum player_status state;
 	struct mpd_status *status;
 
+	state = PLAYER_UNKNOW;
+
 	if(status = mpd_get_status(), status == NULL)
+	{
+		_ERROR("Fail to get mpd status.");
+
 		return PLAYER_UNKNOW;
+	}
 
-	if(mpd_status_get_state(status) == MPD_STATE_PLAY)
-		return PLAYER_PLAY;
+	switch(mpd_status_get_state(status))
+	{
+		case MPD_STATE_PLAY:
+			state = PLAYER_PLAY;
+			break;
 
-	if(mpd_status_get_state(status) == MPD_STATE_PAUSE)
-		return PLAYER_PAUSE;
+		case MPD_STATE_PAUSE:
+			state = PLAYER_PAUSE;
+			break;
 
-	if(mpd_status_get_state(status) == MPD_STATE_STOP)
-		return PLAYER_STOP;
+		case MPD_STATE_STOP:
+			state = PLAYER_STOP;
+			break;
+
+		default:
+			break;
+
+	}
 
 	mpd_status_free(status);
 
-	return PLAYER_UNKNOW;
+	return state;
 }
 
 struct player_music_info *player_get_music_info()
@@ -120,7 +147,8 @@ struct player_music_info *player_get_music_info()
 
 	if(song = mpd_get_song(), song == NULL)
 	{
-		printf("song is null.\n");
+		_ERROR("song is null.");
+
 		return NULL;
 	}
 	

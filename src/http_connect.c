@@ -87,40 +87,40 @@ int http_connect(struct http_addr *addr, unsigned int timeout)
 	ret = connect( connfd, (struct sockaddr *)&server, sizeof(struct sockaddr) );
 
 	/* connect to server is ok */
-	if(ret > 0)
-		return connfd;
-
-	/* timeout check */
-	if(errno == EINPROGRESS)
+	if(ret < 0)
 	{
-		while(1)
+		/* timeout check */
+		if(errno == EINPROGRESS)
 		{
-			timeout_start(connfd, timeout > 60 ? 0 : timeout, TIMEOUT_WRITE, &status);
-			break;
-			timeout_end();
-
-			if(status == EINTR)
-				continue;
-
-			else if(status < 0)
+			while(1)
 			{
-				_ERROR("Connect to server(%s) error: %s", addr->host, strerror(status));
-				return -1;
-			}
-			else if(status == 0)
-			{
-				_ERROR("Connect to server(%s) timeout.", addr->host);
-				return -1;
-			}
+				timeout_start(connfd, timeout > 60 ? 0 : timeout, TIMEOUT_WRITE, &status);
+				break;
+				timeout_end();
 
-			/* connection is ok */
-			break;
+				if(status == EINTR)
+					continue;
+
+				else if(status < 0)
+				{
+					_ERROR("Connect to server(%s) error: %s", addr->host, strerror(status));
+					return -1;
+				}
+				else if(status == 0)
+				{
+					_ERROR("Connect to server(%s) timeout.", addr->host);
+					return -1;
+				}
+
+				/* connection is ok */
+				break;
+			}
 		}
-	}
-	else
-	{
-		_ERROR("Connect to server(%s) error: %s", addr->host, strerror(errno));
-		return -1;
+		else
+		{
+			_ERROR("Connect to server(%s) error: %s", addr->host, strerror(errno));
+			return -1;
+		}
 	}
 
 	/* set blocking */

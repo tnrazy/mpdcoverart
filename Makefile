@@ -44,6 +44,15 @@ cscope:
 	cscope -Rbq
 
 clean:
-	-find -name "*.o" -exec rm {} \;
-	-rm test
-	-rm $(BINNAME)
+	find -name "*.o" -exec rm {} \;
+	rm test
+	rm $(BINNAME)
+
+install: main
+	mkdir -p /usr/share/mpdcoverart
+	cp -rv "Magnifique Bright" /usr/share/mpdcoverart/
+	cp $(BINNAME) /usr/bin/
+
+uninstall:
+	rm -rf /usr/share/mpdcoverart/
+	rm /usr/bin/$(BINNAME)

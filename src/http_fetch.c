@@ -121,9 +121,12 @@ static int http_do_fetch(int connfd, char *fullname, struct http_res *res)
 		while(write(fd, buf, num_bytes) != num_bytes)
 		{
 			_ERROR("Write data error: %s", strerror(errno));
+
 			close(fd);
 			if(unlink(fullname) == 0)
+			{
 				_INFO("Remove the file: %s", fullname);
+			}
 			else
 				_ERROR("Remove file: %s, error.", fullname);
 
@@ -132,7 +135,7 @@ static int http_do_fetch(int connfd, char *fullname, struct http_res *res)
 
 		//_INFO("%s, PROGRESS: %d%%", fullname, (int)(((double)total - remain) / total * 100));
 
-		if(remain == 0)
+		if(remain <= 0)
 			break;
 	}
 

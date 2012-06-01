@@ -15,7 +15,7 @@
 #include <unistd.h>
 #include <string.h>
 
-#define TIMEOUT                 10
+#define TIMEOUT                 5
 
 static char *http_get_cookie(int conn, struct http_req *req);
 

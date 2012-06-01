@@ -181,8 +181,6 @@ void http_req_free(struct http_req *ptr)
 {
     	if_null_return(ptr);
 
-	_DEBUG("Free the request.");
-
 	if(ptr->hdr)
 		free(ptr->hdr);
 

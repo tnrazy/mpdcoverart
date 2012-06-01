@@ -13,7 +13,7 @@
 #include <stdint.h>
 
 #define DEF_PORT                                    80
-#define DEF_TIMEOUT                                 15
+#define DEF_TIMEOUT                                 5
 #define PERM                                        0660
 
 #define KB                                          (1024ULL) << 0
@@ -183,8 +183,6 @@ struct http_res *http_exec(int connfd, struct http_req *req, unsigned int timeou
 
 char *http_fetch(int connfd, struct http_res *res, char *filename);
 
-char *http_getfile(char *url, char *fname, enum http_flags flag);
-
 /* clean */
 void http_req_free(struct http_req *ptr);
 
@@ -201,5 +199,7 @@ char *http_req_hdr_hdr(char *host, char *uri, enum http_cxt_types type, char *da
 char *http_req_hdr_get(char *host, char *uri, enum http_cxt_types type, char *data);
 
 char *http_req_hdr_post(char *host, char *uri, enum http_cxt_types type, char *data);
+
+char *http_getfile(char *url, char *fname, enum http_flags flag);
 
 #endif

@@ -5,8 +5,8 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
 DEF_SKIN	ui.h	71;"	d
-INFO_NA	ui_player_info.c	17;"	d	file:
-LAB_FORMAT	ui_player_info.c	16;"	d	file:
+INFO_NA	ui_player_info.c	20;"	d	file:
+LAB_FORMAT	ui_player_info.c	19;"	d	file:
 UI_H	ui.h	11;"	d
 album	ui.h	/^	struct ui_skin_label *album;$/;"	m	struct:ui_skin	typeref:struct:ui_skin::ui_skin_label	access:public
 albumcover	ui.h	/^	struct ui_skin_albumcover *albumcover;$/;"	m	struct:ui_skin	typeref:struct:ui_skin::ui_skin_albumcover	access:public
@@ -40,6 +40,8 @@ img_prev	ui.h	/^	struct ui_skin_image *img_prev;$/;"	m	struct:ui_skin	typeref:st
 lab_album	ui_player_info.c	/^static GtkWidget *lab_album;$/;"	v	file:
 lab_artist	ui_player_info.c	/^static GtkWidget *lab_artist;$/;"	v	file:
 lab_title	ui_player_info.c	/^static GtkWidget *lab_title;$/;"	v	file:
+label	ui_player_info.c	/^	struct ui_skin_label *label;$/;"	m	struct:scroll_label	typeref:struct:scroll_label::ui_skin_label	file:	access:public
+main_win	ui_main.c	/^static GtkWidget *main_win;$/;"	v	file:
 max_char	ui.h	/^	int max_char;$/;"	m	struct:ui_skin_label	access:public
 mutex	ui_main.c	/^static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;$/;"	v	file:
 name	ui.h	/^	char *name;$/;"	m	struct:ui_skin	access:public
@@ -49,9 +51,18 @@ s_menu_lock	ui_menu.c	/^static void s_menu_lock(GtkWidget *widget, GdkEventButto
 s_menu_lock	ui_menu.c	/^static void s_menu_lock(GtkWidget *widget, GdkEventButton *event);$/;"	p	file:	signature:(GtkWidget *widget, GdkEventButton *event)
 s_menu_quit	ui_menu.c	/^static void s_menu_quit(GtkWidget *widget, GdkEventButton *event)$/;"	f	file:	signature:(GtkWidget *widget, GdkEventButton *event)
 s_menu_quit	ui_menu.c	/^static void s_menu_quit(GtkWidget *widget, GdkEventButton *event);$/;"	p	file:	signature:(GtkWidget *widget, GdkEventButton *event)
+s_menu_skin	ui_menu.c	/^static void s_menu_skin(GtkWidget *widget, GdkEventButton *event)$/;"	f	file:	signature:(GtkWidget *widget, GdkEventButton *event)
+s_menu_skin	ui_menu.c	/^static void s_menu_skin(GtkWidget *widget, GdkEventButton *event);$/;"	p	file:	signature:(GtkWidget *widget, GdkEventButton *event)
+scroll_label	ui_player_info.c	/^static pthread_t **scroll_label;$/;"	v	file:
+scroll_label	ui_player_info.c	/^struct scroll_label$/;"	s	file:
+scroll_label::label	ui_player_info.c	/^	struct ui_skin_label *label;$/;"	m	struct:scroll_label	typeref:struct:scroll_label::ui_skin_label	file:	access:public
+scroll_label::str	ui_player_info.c	/^	char *str;$/;"	m	struct:scroll_label	file:	access:public
+scroll_label::widget	ui_player_info.c	/^	GtkWidget *widget;$/;"	m	struct:scroll_label	file:	access:public
 skin_conf	ui.h	/^	char *skin_conf;$/;"	m	struct:ui_skin_entity	access:public
+skin_menu_items	ui_menu.c	/^static GtkWidget **skin_menu_items;$/;"	v	file:
 skin_name	ui.h	/^	char *skin_name;$/;"	m	struct:ui_skin_entity	access:public
 src	ui.h	/^	char *src;$/;"	m	struct:ui_skin_image	access:public
+str	ui_player_info.c	/^	char *str;$/;"	m	struct:scroll_label	file:	access:public
 title	ui.h	/^	struct ui_skin_label *title;$/;"	m	struct:ui_skin	typeref:struct:ui_skin::ui_skin_label	access:public
 ui_cover_init	ui.h	/^void ui_cover_init(GtkWidget *fixed, GtkWidget *cover_container);$/;"	p	signature:(GtkWidget *fixed, GtkWidget *cover_container)
 ui_cover_init	ui_cover.c	/^void ui_cover_init(GtkWidget *fixed, GtkWidget *cover_container)$/;"	f	signature:(GtkWidget *fixed, GtkWidget *cover_container)
@@ -79,6 +90,10 @@ ui_player_info_update	ui.h	/^void ui_player_info_update(struct player_music_info
 ui_player_info_update	ui_player_info.c	/^void ui_player_info_update(struct player_music_info *info)$/;"	f	signature:(struct player_music_info *info)
 ui_poll	ui_main.c	/^static int ui_poll(GtkWidget *widget)$/;"	f	file:	signature:(GtkWidget *widget)
 ui_poll	ui_main.c	/^static int ui_poll(GtkWidget *widget);$/;"	p	file:	signature:(GtkWidget *widget)
+ui_scroll_label	ui_player_info.c	/^static void *ui_scroll_label(void *data)$/;"	f	file:	signature:(void *data)
+ui_scroll_label	ui_player_info.c	/^static void *ui_scroll_label(void *data);$/;"	p	file:	signature:(void *data)
+ui_scroll_label_start	ui_player_info.c	/^static void ui_scroll_label_start(int *thread_idx, GtkWidget *widget, struct ui_skin_label *label, char *str)$/;"	f	file:	signature:(int *thread_idx, GtkWidget *widget, struct ui_skin_label *label, char *str)
+ui_scroll_label_start	ui_player_info.c	/^static void ui_scroll_label_start(int *thread_idx, GtkWidget *widget, struct ui_skin_label *label, char *str);$/;"	p	file:	signature:(int *thread_idx, GtkWidget *widget, struct ui_skin_label *label, char *str)
 ui_set_transparent	ui.h	/^int ui_set_transparent(GtkWidget *widget, GdkScreen *old_screen, void *data);$/;"	p	signature:(GtkWidget *widget, GdkScreen *old_screen, void *data)
 ui_set_transparent	ui_misc.c	/^int ui_set_transparent(GtkWidget *widget, GdkScreen *old_screen, void *data)$/;"	f	signature:(GtkWidget *widget, GdkScreen *old_screen, void *data)
 ui_skin	ui.h	/^struct ui_skin$/;"	s
@@ -103,6 +118,7 @@ ui_skin_albumcover::y	ui.h	/^	int y;$/;"	m	struct:ui_skin_albumcover	access:publ
 ui_skin_entity	ui.h	/^struct ui_skin_entity$/;"	s
 ui_skin_entity::skin_conf	ui.h	/^	char *skin_conf;$/;"	m	struct:ui_skin_entity	access:public
 ui_skin_entity::skin_name	ui.h	/^	char *skin_name;$/;"	m	struct:ui_skin_entity	access:public
+ui_skin_entity_free	ui.h	/^void ui_skin_entity_free(struct ui_skin_entity *ptr);$/;"	p	signature:(struct ui_skin_entity *ptr)
 ui_skin_entity_free	ui_skin.c	/^void ui_skin_entity_free(struct ui_skin_entity *ptr)$/;"	f	signature:(struct ui_skin_entity *ptr)
 ui_skin_free	ui.h	/^void ui_skin_free(struct ui_skin *ptr);$/;"	p	signature:(struct ui_skin *ptr)
 ui_skin_free	ui_skin.c	/^void ui_skin_free(struct ui_skin *ptr)$/;"	f	signature:(struct ui_skin *ptr)
@@ -137,8 +153,9 @@ ui_skin_read_integer	ui_skin.c	/^static int ui_skin_read_integer(xmlNode *root, 
 ui_skin_read_integer	ui_skin.c	/^static int ui_skin_read_integer(xmlNode *root, char *node_name, char *attr_name, int *i);$/;"	p	file:	signature:(xmlNode *root, char *node_name, char *attr_name, int *i)
 ui_skin_read_string	ui_skin.c	/^static char *ui_skin_read_string(xmlNode *root, char *node_name, char *attr_name, char **s)$/;"	f	file:	signature:(xmlNode *root, char *node_name, char *attr_name, char **s)
 ui_skin_read_string	ui_skin.c	/^static char *ui_skin_read_string(xmlNode *root, char *node_name, char *attr_name, char **s);$/;"	p	file:	signature:(xmlNode *root, char *node_name, char *attr_name, char **s)
-ui_update	ui.h	/^void ui_update(char *skin_name);$/;"	p	signature:(char *skin_name)
-ui_update	ui_main.c	/^void ui_update(char *skin_name)$/;"	f	signature:(char *skin_name)
+ui_update	ui.h	/^void ui_update(const char *skin_name);$/;"	p	signature:(const char *skin_name)
+ui_update	ui_main.c	/^void ui_update(const char *skin_name)$/;"	f	signature:(const char *skin_name)
+widget	ui_player_info.c	/^	GtkWidget *widget;$/;"	m	struct:scroll_label	file:	access:public
 width	ui.h	/^	int width;$/;"	m	struct:ui_skin	access:public
 width	ui.h	/^	int width;$/;"	m	struct:ui_skin_albumcover	access:public
 x	ui.h	/^	int x;$/;"	m	struct:ui_skin_albumcover	access:public

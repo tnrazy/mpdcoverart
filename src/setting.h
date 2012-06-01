@@ -54,11 +54,11 @@ unsigned int cfg_get_pos_y();
 
 unsigned int cfg_get_pos_lock();
 
-void cfg_set_postion(char *xy);
+void cfg_set_postion(const char *xy);
 
 void cfg_set_postion_lock();
 
 /* change skin */
-void cfg_set_skinname(char *skin_name);
+void cfg_set_skinname(const char *skin_name);
 
 #endif

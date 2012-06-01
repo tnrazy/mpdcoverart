@@ -43,7 +43,7 @@ static GKeyFile *cfg_resolver();
 
 static char *cfg_get(enum cfg_keys cfg_key);
 
-static void cfg_set(enum cfg_keys, char *value);
+static void cfg_set(enum cfg_keys, const char *value);
 
 static int cfg_init;
 
@@ -201,7 +201,7 @@ unsigned int cfg_get_pos_y()
 	return y;
 }
 
-void cfg_set_postion(char *xy)
+void cfg_set_postion(const char *xy)
 {
 	cfg_set(CFG_POSITION, xy);
 }
@@ -214,7 +214,7 @@ void cfg_set_postion_lock()
 	cfg_set(CFG_POSITION_LOCK, format);
 }
 
-void cfg_set_skinname(char *skin_name)
+void cfg_set_skinname(const char *skin_name)
 {
 	cfg_set(CFG_SKINNAME, skin_name);
 }
@@ -246,7 +246,7 @@ static char *cfg_get(enum cfg_keys cfg_key)
 	return strdup(cfgs[cfg_key].value);
 }
 
-static void cfg_set(enum cfg_keys cfg_key, char *value)
+static void cfg_set(enum cfg_keys cfg_key, const char *value)
 {
 	if(cfg_key < 0 || cfg_key >= CFG_UNKNOW)
 	{

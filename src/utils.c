@@ -21,14 +21,14 @@ static char to_hex(char ch);
 
 static char from_hex(char ch);
 
-static char **dir_search_p(char *path, char *pattern, int depth, char ***res, int *idx, int max_matched);
+static char **dir_search_p(const char *path, const char *pattern, int depth, char ***res, int *idx, int max_matched);
 
-char *strstr_igcase(char *str, char *need, size_t str_len, int contain_need)
+char *strstr_igcase(const char *str, const char *need, size_t str_len, int contain_need)
 {
     	if(str == 0 || need == 0)
 		return 0;
 
-	char *s = str, *n = need;
+	char *s = (char *)str, *n = (char *)need;
 	int i, matched = 0;
 
 	while(1)
@@ -42,7 +42,7 @@ char *strstr_igcase(char *str, char *need, size_t str_len, int contain_need)
 			++s;
 
 			/* reset need string and set flag is not matched */
-			n = need;
+			n = (char *)need;
 			matched = 0;
 
 			/* reach the end */
@@ -66,7 +66,7 @@ char *strstr_igcase(char *str, char *need, size_t str_len, int contain_need)
 	return (matched == 1 && *n == '\0') ? (contain_need ? s - (n - need) : s) : 0;
 }
 
-char *get_ln(char *src, size_t src_len, char *buf, size_t buf_len, char *token)
+char *get_ln(char *src, size_t src_len, char *buf, size_t buf_len, const char *token)
 {
 	if(src == 0 || buf == 0 || token == 0 || src_len < 0 || buf_len < 0)
 	{
@@ -115,7 +115,7 @@ int set_nonblock(int *fd, int *old)
 	return *fd;
 }
 
-char *url_encode(char *str)
+char *url_encode(const char *str)
 {
     	char *s = calloc(strlen(str) * 3 + 1, 1), *ptr = s;
 
@@ -143,7 +143,7 @@ char *url_encode(char *str)
 	return ptr;
 }
 
-char *url_decode(char *str)
+char *url_decode(const char *str)
 {
     	char *s = calloc(strlen(str) + 1, 1), *ptr = s;
 
@@ -174,7 +174,7 @@ char *url_decode(char *str)
 	return ptr;
 }
 
-char *path_wildcard(char *str)
+char *path_wildcard(const char *str)
 {
     	if(str == NULL)
 		return NULL;
@@ -204,7 +204,7 @@ char *path_wildcard(char *str)
 	return realpath;
 }
 
-char *path_real(char *path, char *filename)
+char *path_real(const char *path, char *filename)
 {    
     	char *offset, *real, *home;
     
@@ -273,7 +273,7 @@ char *path_real(char *path, char *filename)
 	return real;
 }
 
-char **dir_search(char *path, char *pattern, int depth, int max_matched)
+char **dir_search(const char *path, const char *pattern, int depth, int max_matched)
 {
 	if(path == NULL || pattern == NULL)
 		return NULL;
@@ -380,7 +380,7 @@ static char from_hex(char ch)
 	return ch - 'a' + 10;
 }
 
-static char **dir_search_p(char *path, char *pattern, int depth, char ***res, int *idx, int max_matched)
+static char **dir_search_p(const char *path, const char *pattern, int depth, char ***res, int *idx, int max_matched)
 {
 	pcre *reg;
 	DIR *dir;
