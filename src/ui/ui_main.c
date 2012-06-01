@@ -20,6 +20,10 @@ static int ui_poll(GtkWidget *widget);
 
 static GtkWidget *main_win;
 
+static struct player_music_info *old_info;
+
+static pthread_mutex_t poll_mutex = PTHREAD_MUTEX_INITIALIZER;
+
 void ui_load()
 {
 	GtkWidget *window;
@@ -82,7 +86,6 @@ void ui_load()
 	gtk_main();
 }
 
-static struct player_music_info *old_info = NULL;
 
 void ui_update(const char *skin_name)
 {
@@ -119,13 +122,11 @@ void ui_update(const char *skin_name)
 	old_info = info;
 }
 
-static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-
 static int ui_poll(GtkWidget *widget)
 {
 	struct player_music_info *new_info;
 
-	pthread_mutex_lock(&mutex);
+	pthread_mutex_lock(&poll_mutex);
 
 	new_info = player_get_music_info();
 
@@ -133,7 +134,7 @@ static int ui_poll(GtkWidget *widget)
 	{
 		old_info = new_info;
 
-		pthread_mutex_unlock(&mutex);
+		pthread_mutex_unlock(&poll_mutex);
 
 		return TRUE;
 	}
@@ -142,7 +143,7 @@ static int ui_poll(GtkWidget *widget)
 	{
 		player_music_info_free(new_info);
 
-		pthread_mutex_unlock(&mutex);
+		pthread_mutex_unlock(&poll_mutex);
 
 		return TRUE;
 	}
@@ -153,7 +154,7 @@ static int ui_poll(GtkWidget *widget)
 
 	old_info = new_info;
 
-	pthread_mutex_unlock(&mutex);
+	pthread_mutex_unlock(&poll_mutex);
 
 	return TRUE;
 }
