@@ -109,6 +109,11 @@ void ui_update(const char *skin_name)
 		ui_load();
 	}
 
+	if(info == NULL)
+	{
+		return;
+	}
+
 	/* refresh control */
 	ui_player_control_update();
 
@@ -129,6 +134,13 @@ static int ui_poll(GtkWidget *widget)
 	pthread_mutex_lock(&poll_mutex);
 
 	new_info = player_get_music_info();
+
+	if(new_info == NULL)
+	{
+		pthread_mutex_unlock(&poll_mutex);
+
+		return TRUE;
+	}
 
 	if(old_info == NULL)
 	{
