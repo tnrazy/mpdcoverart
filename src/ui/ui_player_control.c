@@ -135,7 +135,7 @@ static int e_player_status(GtkWidget *widget, GdkEventButton *event, void *data)
 {
 	if(player_toggle() < 0)
 	{
-		return FALSE;
+		return TRUE;
 	}
 
 	ui_update(NULL);
@@ -148,7 +148,7 @@ static int e_player_next(GtkWidget *widget, GdkEventButton *event, void *data)
 	if(player_next() < 0)
 	{
 		/* fail */
-		return FALSE;
+		return TRUE;
 	}
 
 	/* refresh ui info */
@@ -162,7 +162,7 @@ static int e_player_prev(GtkWidget *widget, GdkEventButton *event, void *data)
 	if(player_prev() < 0)
 	{
 		/* fail */
-		return FALSE;
+		return TRUE;
 	}
 
 	ui_update(NULL);

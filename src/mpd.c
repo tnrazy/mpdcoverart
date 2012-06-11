@@ -188,6 +188,9 @@ int player_next()
 
 	conn = mpd_get_connection();
 
+	if(conn == NULL)
+		return -1;
+
 	res = mpd_run_next(conn);
 	
 	mpd_connection_free(conn);
@@ -202,6 +205,9 @@ int player_prev()
 
 	conn = mpd_get_connection();
 
+	if(conn == NULL)
+		return -1;
+
 	res = mpd_run_previous(conn);
 
 	mpd_connection_free(conn);
@@ -215,6 +221,9 @@ int player_toggle()
 	int res;
 
 	conn = mpd_get_connection();
+
+	if(conn == NULL)
+		return -1;
 
 	res = mpd_run_toggle_pause(conn);
 
