@@ -10,7 +10,7 @@
 #define ___DEBUG
 
 #include "list.h"
-#include "msg.h"
+#include "log.h"
 
 #include <stdlib.h>
 #include <string.h>

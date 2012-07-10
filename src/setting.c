@@ -11,7 +11,7 @@
 
 #include "setting.h"
 #include "utils.h"
-#include "msg.h"
+#include "log.h"
 
 #include <stdio.h>
 #include <stdlib.h>

@@ -8,7 +8,7 @@
  */
 
 #include "ui.h"
-#include "msg.h"
+#include "log.h"
 #include "utils.h"
 #include "setting.h"
 

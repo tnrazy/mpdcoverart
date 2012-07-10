@@ -45,8 +45,8 @@ cscope:
 
 clean:
 	find -name "*.o" -exec rm {} \;
-	rm test
-	rm $(BINNAME)
+	-rm test
+	-rm $(BINNAME)
 
 install: main
 	mkdir -p /usr/share/mpdcoverart

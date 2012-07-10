@@ -10,7 +10,7 @@
 //#define ___DEBUG
 
 #include "http.h"
-#include "msg.h"
+#include "log.h"
 #include "utils.h"
 
 #include <stdio.h>
@@ -156,7 +156,7 @@ static char *do_match(int fd, const char *pattern)
 	regcomp(&reg, pattern, REG_EXTENDED);
 
 	walk = start;
-	while(walk = strstr_igcase(walk, "<img src=\"http://", offset, 0), walk)
+	while(walk = strstr_igcase(walk, "<img src=\"http://", 0), walk)
 	{
 		/* match pattern */
 		if(regexec(&reg, walk, 1, &match, 0) == 0)

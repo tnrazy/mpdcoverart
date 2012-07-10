@@ -7,7 +7,7 @@
  * tn.razy@gmail.com
  */
 
-#include "msg.h"
+#include "log.h"
 #include "setting.h"
 #include "ui.h"
 

@@ -11,7 +11,7 @@
 #define ___TEMPLATE_INIT
 
 #include "http.h"
-#include "msg.h"
+#include "log.h"
 #include "utils.h"
 
 #include <stdio.h>

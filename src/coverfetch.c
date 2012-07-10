@@ -11,7 +11,7 @@
 
 #include "coverfetch.h"
 #include "setting.h"
-#include "msg.h"
+#include "log.h"
 #include "utils.h"
 
 #include <stdio.h>
@@ -196,7 +196,7 @@ static char *getcover_local(const char *uri, const char *artist, const char *tit
 		snprintf(pattern, sizeof pattern, "%s - %s", artist, title);
 
 		/* replace '(' to '\(' '^' to '\^' ... */
-		tmp = reg_clean(pattern);
+		tmp = clean_reg(pattern);
 
 		snprintf(pattern, sizeof pattern, "^%s.(jpg|png|JPG|PNG)$", tmp);
 		free(tmp);
@@ -229,7 +229,7 @@ static char *getcover_local(const char *uri, const char *artist, const char *tit
 	for(char *list = cfg_get_rule(), *buf = list; buf;)
 	{
 		_DEBUG("Ruelist: %s", list);
-		buf = get_ln(buf, strlen(buf), rule, sizeof rule, ";");
+		buf = strstr_ln(buf, rule, sizeof rule, ";");
 
 		if(buf == NULL)
 		{

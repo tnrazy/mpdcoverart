@@ -10,7 +10,7 @@
 //#define ___DEBUG
 
 #include "http.h"
-#include "msg.h"
+#include "log.h"
 #include "utils.h"
 
 #include <stdio.h>
@@ -217,7 +217,7 @@ static int http_res_attr(char *hdr, struct http_res *res)
 	res->type = NULL;
 	res->cookie = NULL;
 
-	while(walk = get_ln(walk, strlen(walk), line, sizeof line, "\r\n"), walk)
+	while(walk = strstr_ln(walk, line, sizeof line, "\r\n"), walk)
 	{
 		/* the first line is the response status line */
 		if(res->status_code == 0)
@@ -239,7 +239,7 @@ static int http_res_attr(char *hdr, struct http_res *res)
 		/* get the content length, context length is before encode */
 		if(res->length == 0)
 		{
-			if(tmp = strstr_igcase(line, "content-length: ", strlen(line), 0), tmp)
+			if(tmp = strstr_igcase(line, "content-length: ", 0), tmp)
 			{
 				res->length = atoi(tmp);
 				_DEBUG("Content length: %d", res->length);
@@ -260,7 +260,7 @@ static int http_res_attr(char *hdr, struct http_res *res)
 		}
 
 		/* get response cookie */
-		if(tmp = strstr_igcase(line, "set-cookie: ", strlen(line), 0), tmp)
+		if(tmp = strstr_igcase(line, "set-cookie: ", 0), tmp)
 		{
 			if(res->cookie == NULL)
 				res->cookie = calloc(strlen(tmp) + 1, 1);
@@ -282,7 +282,7 @@ static int http_res_attr(char *hdr, struct http_res *res)
 
 static struct file_type *http_cxt_type(char *tname)
 {
-    	if(strstr_igcase(tname, "content-type: ", strlen(tname), 0) == NULL)
+    	if(strstr_igcase(tname, "content-type: ", 0) == NULL)
 		return NULL;
 
 	for(struct file_type *list = cxt_types, *ftype = list; ftype;)

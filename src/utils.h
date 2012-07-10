@@ -84,16 +84,14 @@ enum time_flag
  * in a string find a string, and ignore case, 
  * if the contain_need is 0 not return need else contain need string
  * */
-char *strstr_igcase(const char *str, const char *need, size_t str_len, int contain_need);
+char *strstr_igcase(const char *str, const char *need, int contain_need);
 
 /* 
  * get a line end by token from the src, 
  * buf_len must be larger than line length
  * if arguments error or signal line return null, otherwise return the next line
  * */
-char *get_ln(char *src, size_t src_len, char *buf, size_t buf_len, const char *token);
-
-int set_nonblock(int *fd, int *old);
+char *strstr_ln(char *src, char *buf, size_t size, const char *token);
 
 char *url_decode(const char *str);
 
@@ -103,7 +101,7 @@ char *path_wildcard(const char *str);
 
 char *path_real(const char *path, char *filename);
 
-char *reg_clean(char *str);
+char *clean_reg(char *str);
 
 /*
  * name is a array

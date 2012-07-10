@@ -10,7 +10,7 @@
 //#define ___DEBUG
 
 #include "http.h"
-#include "msg.h"
+#include "log.h"
 #include "utils.h"
 
 #include <string.h>
@@ -75,9 +75,19 @@ int http_connect(struct http_addr *addr, unsigned int timeout)
 	}
 
 	/* set non-blocking */
-	if(set_nonblock(&connfd, &flag) == -1)
+	if(flag = fcntl(connfd, F_GETFL), flag < 0)
 	{
-		_ERROR("Set connfd non-blocking is error.");
+		_ERROR("Get connection file descriptor flag error: %s", strerror(errno));
+
+		close(connfd);
+		return -1;
+	}
+
+	if(fcntl(connfd, F_SETFL, flag | O_NONBLOCK) < 0)
+	{
+		_ERROR("Set connection file descriptor flag error: %s", strerror(errno));
+
+		close(connfd);
 		return -1;
 	}
 
