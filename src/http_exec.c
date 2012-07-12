@@ -38,8 +38,6 @@ static struct file_type *http_cxt_type(char *tname);
  * */
 struct http_res *http_exec(int connfd, struct http_req *req, unsigned int timeout)
 {
-    	if_null_return_null(req);
-
 	struct http_res *res;
 	char *hdr;
 
@@ -109,8 +107,6 @@ struct http_res *http_exec(int connfd, struct http_req *req, unsigned int timeou
 
 void http_pr_res(struct http_res *res)
 {
-    	if_null_return(res);
-
 	_DEBUG("Response status code: %d", res->status_code);
 	_DEBUG("Context type: %s", res->type->tname);
 	_DEBUG("Context length: %d", res->length);
@@ -283,7 +279,9 @@ static int http_res_attr(char *hdr, struct http_res *res)
 static struct file_type *http_cxt_type(char *tname)
 {
     	if(strstr_igcase(tname, "content-type: ", 0) == NULL)
-		return NULL;
+    	{
+    		return NULL;
+    	}
 
 	for(struct file_type *list = cxt_types, *ftype = list; ftype;)
 	{
