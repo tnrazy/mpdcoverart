@@ -39,17 +39,7 @@ XX(GET,         1,  "GET %s HTTP/1.1\r\n"                   \
                     "User-Agent: " UAGENT "\r\n"            \
                     "Connection: close\r\n",                \
                     /* extension header */                  \
-                    "Cookie: %s\r\n"                        )\
-                                                            \
-XX(POST,        2,  "POST %s HTTP/1.1\r\n"                  \
-                    "Host: %s\r\n"                          \
-                    "User-Agent: " UAGENT "\r\n"            \
-                    "Connection: close\r\n",                \
-                                                            \
-                    /* extension header */                  \
-                    "Content-Type: %s\r\n"                  \
-                    "Content-Length: %d\r\n"                \
-                    "\n\n%s"                                )
+                    "Cookie: %s\r\n"                        )
 
 #define CONTEXT_TYPE_MAP(XX)                                \
 XX(X_FORM,      0,  "application/x-www-form-urlencoded", 0  )\
@@ -197,8 +187,6 @@ void http_pr_res(struct http_res *res);
 char *http_req_hdr_hdr(char *host, char *uri, enum http_cxt_types type, char *data);
 
 char *http_req_hdr_get(char *host, char *uri, enum http_cxt_types type, char *data);
-
-char *http_req_hdr_post(char *host, char *uri, enum http_cxt_types type, char *data);
 
 char *http_getfile(char *url, char *fname, enum http_flags flag);
 

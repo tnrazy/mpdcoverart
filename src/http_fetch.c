@@ -25,10 +25,10 @@ static int http_do_fetch(int connfd, char *fullname, struct http_res *res);
 
 char *http_fetch(int connfd, struct http_res *res, char *filename)
 {
-    	if_null_return_null(res);
-	if_null_return_null(res->type);
-	if_null_return_null(res->type->ext);
-	if_null_return_null(filename);
+	if(res == NULL || res->type == NULL || res->type->ext == NULL || filename == NULL)
+	{
+		return NULL;
+	}
 
 	/* file name + extension name */
 	char *fullname;
@@ -62,9 +62,13 @@ char *http_fetch(int connfd, struct http_res *res, char *filename)
 
 
 		if(unlink(fullname) == 0)
+		{
 			_INFO("Remove the file: %s", fullname);
+		}
 		else
-			_ERROR("Remove file: %s, error.", fullname);
+		{
+			_WARN("Remove file: %s, error.", fullname);
+		}
 
 		free(fullname);
 		return NULL;
@@ -133,10 +137,12 @@ static int http_do_fetch(int connfd, char *fullname, struct http_res *res)
 			return remain;
 		}
 
-		//_INFO("%s, PROGRESS: %d%%", fullname, (int)(((double)total - remain) / total * 100));
+		//_DEBUG("%s, PROGRESS: %d%%", fullname, (int)(((double)total - remain) / total * 100));
 
 		if(remain <= 0)
+		{
 			break;
+		}
 	}
 
 	return remain;

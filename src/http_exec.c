@@ -107,6 +107,12 @@ struct http_res *http_exec(int connfd, struct http_req *req, unsigned int timeou
 
 void http_pr_res(struct http_res *res)
 {
+	if(res == NULL)
+	{
+		_WARN("Response is null.");
+		return;
+	}
+
 	_DEBUG("Response status code: %d", res->status_code);
 	_DEBUG("Context type: %s", res->type->tname);
 	_DEBUG("Context length: %d", res->length);
@@ -114,7 +120,10 @@ void http_pr_res(struct http_res *res)
 
 void http_res_free(struct http_res *res)
 {
-    	if_null_return(res);
+	if(res == NULL)
+	{
+		return;
+	}
 
 	_DEBUG("Free the response.");
 	if(res->cookie)

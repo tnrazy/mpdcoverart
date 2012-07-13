@@ -25,8 +25,6 @@
 
 int http_connect(struct http_addr *addr, unsigned int timeout)
 {
-    	if_null_return_null(addr);
-
 	if(addr->port <= 0 || addr->port >= 0XFFFF)
 	{
 		_WARN("Error port: %d, set by DEF_PORT.", addr->port);
@@ -146,5 +144,11 @@ int http_connect(struct http_addr *addr, unsigned int timeout)
 
 void http_closeconn(int connfd)
 {
+	if(connfd <= 0)
+	{
+		_WARN("Bad file descriptor.");
+		return;
+	}
+
     	shutdown(connfd, SHUT_RDWR);
 }

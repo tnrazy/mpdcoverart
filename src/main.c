@@ -18,7 +18,9 @@
 int main(int argc, const char **argv)
 {
 	if(signal(SIGHUP, SIG_IGN) == SIG_ERR)
+	{
 		die("signal() error.");
+	}
 
 	char *skin_name;
 

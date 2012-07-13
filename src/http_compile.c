@@ -36,8 +36,6 @@ struct http_req *http_compile(char *url, enum http_mtd_types method, hdr_gen fun
                                             enum http_cxt_types type,
                                             char *data)
 {
-    	if_null_return_null(url);
-
 	struct http_req *req;
 
 	/* check the method type */
@@ -122,40 +120,6 @@ struct http_req *http_compile(char *url, enum http_mtd_types method, hdr_gen fun
 }
 
 /* 
- * generate the POST message header and body
- * */
-char *http_req_hdr_post(char *host, char *uri, enum http_cxt_types type, char *data)
-{
-    	if(type != HTTP_CXT_X_FORM)
-	{
-		_ERROR("Error form type: %d", type);
-		return NULL;
-	}
-
-	/* make sure data is not null */
-	if(data == NULL)
-		data = strdup("");
-
-	char *tmp = req_hdr_ext[HTTP_MTD_POST], *hdr_comm, *hdr_ext, *hdr, *tname = cxt_types[type].tname;
-
-	hdr_comm = http_req_hdr_comm(HTTP_MTD_POST, host, uri);
-
-	hdr_ext = calloc(strlen(tmp) + sizeof(unsigned long) + strlen(tname) + strlen(data) + 1, 1);
-	sprintf(hdr_ext, tmp, tname, strlen(data), data);
-
-	hdr = calloc(strlen(hdr_comm) + strlen(hdr_ext) + 1, 1);
-
-	/* copy memory */
-	memcpy(hdr, hdr_comm, strlen(hdr_comm));
-	memcpy(hdr + strlen(hdr_comm), hdr_ext, strlen(hdr_ext));
-
-	free(hdr_comm);
-	free(hdr_ext);
-
-	return hdr;
-}
-
-/* 
  * generate the request header
  * wrappr of req_hdr_comm
  * */
@@ -179,10 +143,15 @@ char *http_req_hdr_get(char *host, char *uri, enum http_cxt_types type, char *da
 
 void http_req_free(struct http_req *ptr)
 {
-    	if_null_return(ptr);
+	if(ptr == NULL)
+	{
+		return;
+	}
 
 	if(ptr->hdr)
+	{
 		free(ptr->hdr);
+	}
 
 	if(ptr->addr)
 	{
@@ -206,7 +175,11 @@ void http_req_free(struct http_req *ptr)
  * */
 void http_pr_req(struct http_req *req)
 {
-	if_null_return(req);
+	if(req == NULL)
+	{
+		_WARN("Request is null.");
+		return;
+	}
 
 	_DEBUG("URL:  %s", req->addr->url);
 	_DEBUG("Host: %s", req->addr->host);
