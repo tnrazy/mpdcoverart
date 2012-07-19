@@ -147,16 +147,24 @@ static char *getcover_network(const char *uri, const char *artist, const char *t
 	{
 		/* remove the path name */
 		if(strrchr(uri, '/'))
+		{
 			snprintf(key, sizeof key, "%s", strrchr(uri, '/') + 1);
+		}
+		else
+		{
+			strncpy(key, uri, sizeof key);
+		}
 
 		/* remove the file extension name */
 		if(strrchr(key, '.'))
+		{
 			*(strrchr(key, '.')) = '\0';
+		}
 
 		/* content of search [0-9a-zA-Z\\s] */
 		clean_name(key);
 
-		_DEBUG("Key: %s", key);
+		_DEBUG("URI: %s, Key: %s", uri, key);
 
 		if(cover = getcover_network_v(fetch, cover_path, "%s", key), cover)
 		{

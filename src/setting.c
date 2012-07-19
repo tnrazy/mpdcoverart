@@ -266,7 +266,7 @@ static void cfg_set(enum cfg_keys cfg_key, const char *value)
 
 	g_key_file_set_value(cfgfile, cfgs[cfg_key].cfggrp, cfgs[cfg_key].cfgkey, value);
 
-	data = g_key_file_to_data(cfgfile, &length, NULL);
+	data = g_key_file_to_data(cfgfile, (gsize *)&length, NULL);
 
 	if(data)
 	{

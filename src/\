@@ -159,19 +159,26 @@ struct player_music_info *player_get_music_info()
 	if(value = mpd_song_tag((const struct mpd_song *)song, MPD_TAG_ARTIST), value)
 	{
 		/*
-		 * artist contain '/' replace '/' as '&'
+		 * artist1/artist2
 		 * */
 		info->artist = strdup(value);
 
-		for(char *s = info->artist; *s;)
-		{
-			if(*s == '\\' || *s == '/')
-			{
-				*s = '&';
-			}
+		_INFO("value: %s", value);
 
-			++s;
-		}
+		/*info->artist = calloc(strlen(value) + 1, 1);*/
+
+		/*for(char *s = (char *)value; s++;)*/
+		/*{*/
+			/*_DEBUG("ch: %c", value);*/
+			/**((info->artist)++) = *s;*/
+
+			/*if(*s == '\\' || *s == '/')*/
+			/*{*/
+				/**(info->artist) = '&';*/
+			/*}*/
+		/*}*/
+
+		/*_DEBUG(info->artist);*/
 	}
 
 	if(value = mpd_song_tag((const struct mpd_song *)song, MPD_TAG_TITLE), value)

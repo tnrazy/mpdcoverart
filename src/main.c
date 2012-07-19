@@ -24,6 +24,8 @@ int main(int argc, const char **argv)
 
 	char *skin_name;
 
+#if defined(MSG2_FILE)
+
 	switch(fork())
 	{
 		case -1:
@@ -36,6 +38,8 @@ int main(int argc, const char **argv)
 	}
 
 	setsid();
+
+#endif
 
 	chdir("/");
 

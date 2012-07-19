@@ -7,7 +7,7 @@
  * tn.razy@gmail.com
  */
 
-//#define ___DEBUG
+#define ___DEBUG
 
 #include "http.h"
 #include "log.h"
@@ -82,7 +82,7 @@ static int http_do_fetch(int connfd, char *fullname, struct http_res *res)
     	char buf[1024];
 	int fd, num_bytes, remain = res->length;
 
-	/* remove the file mask */
+	/* create file */
 	fd = open(fullname, O_CREAT | O_WRONLY, PERM);
 
 	if((int)res->tail_len > 0)
