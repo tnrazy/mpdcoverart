@@ -139,6 +139,7 @@ static void usage()
 	fprintf(stderr, "\n\n");
 
 	fprintf(stderr, "Get cover art from douban.com.\n");
+	fprintf(stderr, "Lastest version: \033[1;4mhttp://github.com/tnrazy/mpdcovrtart\033[0m\n");
 	fprintf(stderr, "\n\n");
 
 	fprintf(stderr, "Options:\n");
