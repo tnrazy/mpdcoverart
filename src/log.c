@@ -8,7 +8,7 @@
  */
 
 #include "log.h"
-#include "setting.h"
+#include "config.h"
 
 #include <stdlib.h>
 #include <stdarg.h>
@@ -17,36 +17,36 @@
 
 int msg_out[] =
 {
-    /* 
-     * message out just stdout and stderror 
-     * 1: stdout
-     * 2: stderr
-     * */
-    #define XX(NAME, VALUE, FP, PRE_MSG, COLOR)             (FP & 1) + 1,
-    MSG_MAP(XX)
-    #undef XX
+    	/* 
+     	* message out just stdout and stderror 
+     	* 1: stdout
+     	* 2: stderr
+     	* */
+    	#define XX(NAME, VALUE, FP, PRE_MSG, COLOR)             (FP & 1) + 1,
+    	MSG_MAP(XX)
+    	#undef XX
 
-    /* end */
-    0
+    	/* end */
+    	0
 };
 
 char *msg_prefix[] =
 {
-    #define XX(NAME, VALUE, FP, PRE_MSG, COLOR)             PRE_MSG,
-    MSG_MAP(XX)
-    #undef XX
+    	#define XX(NAME, VALUE, FP, PRE_MSG, COLOR)             PRE_MSG,
+    	MSG_MAP(XX)
+    	#undef XX
 
-    NULL
+    	NULL
 };
 
 int msg_color[] = 
 {
-    #define XX(NAME, VALUE, FP, PRE_MSG, COLOR)             COLOR,
-    MSG_MAP(XX)
-    #undef XX
+    	#define XX(NAME, VALUE, FP, PRE_MSG, COLOR)             COLOR,
+    	MSG_MAP(XX)
+    	#undef XX
 
-    /* end */
-    0
+    	/* end */
+    	0
 };
 
 void prmsg(enum msg_types msg_type, const char *format, ...)
@@ -57,6 +57,11 @@ void prmsg(enum msg_types msg_type, const char *format, ...)
 		  		"Error message type.", 
 		  		msg_color[MSG_ERROR], 
 		  		AT);
+		return;
+	}
+
+	if(!cfg_get_debug() && msg_type == MSG_DEBUG)
+	{
 		return;
 	}
 
@@ -80,14 +85,18 @@ void prmsg(enum msg_types msg_type, const char *format, ...)
 	FILE *f;
 
 	if(msg_type != MSG_ERROR)
+	{
 		return;
+	}
 
 	logfile = cfg_get_logfile();
 
 	f = fopen(logfile, "a+");
 
 	if(!f && !logfile)
+	{
 		return;
+	}
 
 	fwrite(msg_buf, strlen(msg_buf), 1, f);
 	fputc('\n', f);
@@ -106,7 +115,11 @@ void die(const char *format, ...)
 	vsnprintf(buf, sizeof buf, format, ap);
 	va_end(ap);
 
-	prmsg(MSG_ERROR, buf);
+	___MSG(     		stderr, 
+	  			msg_prefix[MSG_ERROR],
+	  			buf, 
+	  			msg_color[MSG_ERROR], 
+	  			"");
 
-	exit(1);
+	exit(EXIT_FAILURE);
 }

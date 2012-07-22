@@ -8,7 +8,8 @@
  */
 
 #include "ui.h"
-#include "setting.h"
+#include "player.h"
+#include "config.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -24,28 +25,51 @@ static void s_menu_skin(GtkWidget *widget, GdkEventButton *event);
 
 static void s_menu_lock(GtkWidget *widget, GdkEventButton *event);
 
+static void s_menu_next(GtkWidget *widget, GdkEventButton *event);
+
+static void s_menu_prev(GtkWidget *widget, GdkEventButton *event);
+
 static GtkWidget **skin_menu_items;
 
 void ui_menu_init(GtkWidget *container)
 {
 	GtkWidget *menu;
+	GtkWidget *menu_separator;
 	GtkWidget *skin_menu;
+	GtkWidget *item_next;
+	GtkWidget *item_prev;
 	GtkWidget *item_skin;
 	GtkWidget *item_quit;
 	GtkWidget *item_lock;
 
 	int idx = 0;
 
+	menu_separator = gtk_separator_menu_item_new();
+
 	menu = gtk_menu_new();
 
-	/* menu skin */
+	/* music next */
+	item_next = gtk_menu_item_new_with_label("Next");
 
+	gtk_menu_append(GTK_MENU(menu), item_next);
+
+	/* music preview */
+	item_prev = gtk_menu_item_new_with_label("Preview");
+
+	gtk_menu_append(GTK_MENU(menu), item_prev);
+
+	/* menu separator */
+	gtk_menu_append(GTK_MENU(menu), menu_separator);
+
+	/* menu skin */
 	skin_menu = gtk_menu_new();
 
 	for(struct ui_skin_entity **skins = ui_skin_load_all(), **shell = skins, *skin = *skins; skin;)
 	{
 		if(skin_menu_items == NULL)
+		{
 			skin_menu_items = calloc(sizeof *skin_menu_items, 1 + 1);
+		}
 		else
 			skin_menu_items = realloc(skin_menu_items, (idx + 1 + 1) * sizeof *skin_menu_items);
 
@@ -70,7 +94,9 @@ void ui_menu_init(GtkWidget *container)
 		skin = *++skins;
 
 		if(skin == NULL)
+		{
 			free(shell);
+		}
 	}
 
 	item_skin = gtk_menu_item_new_with_label("Skin");
@@ -79,7 +105,7 @@ void ui_menu_init(GtkWidget *container)
 
 	gtk_menu_append(GTK_MENU(menu), item_skin);
 
-	/* menu lock */
+	/* position lock */
 	item_lock = gtk_check_menu_item_new_with_label("Lock");
 
 	if(cfg_get_pos_lock())
@@ -102,6 +128,8 @@ void ui_menu_init(GtkWidget *container)
 	g_signal_connect(container, "button_press_event", G_CALLBACK(e_window_drag), gtk_widget_get_toplevel(container));
 	g_signal_connect(item_quit, "activate", G_CALLBACK(s_menu_quit), NULL);
 	g_signal_connect(item_lock, "activate", G_CALLBACK(s_menu_lock), NULL);
+	g_signal_connect(item_next, "activate", G_CALLBACK(s_menu_next), NULL);
+	g_signal_connect(item_prev, "activate", G_CALLBACK(s_menu_prev), NULL);
 }
 
 static int e_menu_popup(GtkWidget *widget, GdkEventButton *event, void *data)
@@ -132,6 +160,26 @@ static void s_menu_lock(GtkWidget *widget, GdkEventButton *event)
 {
 	/* lock the postion */
 	cfg_set_postion_lock();
+}
+
+static void s_menu_next(GtkWidget *widget, GdkEventButton *event)
+{
+	if(player_next() < 0)
+	{
+		return;
+	}
+
+	ui_update(NULL);
+}
+
+static void s_menu_prev(GtkWidget *widget, GdkEventButton *event)
+{
+	if(player_prev() < 0)
+	{
+		return;
+	}
+
+	ui_update(NULL);
 }
 
 static int e_window_drag(GtkWidget *widget, GdkEventButton *event, void *data)

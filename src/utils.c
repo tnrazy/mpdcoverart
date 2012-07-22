@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <dirent.h>
 #include <pcre.h>
+#include <ctype.h>
 #include <sys/types.h>
 
 static char to_hex(char ch);
@@ -475,4 +476,25 @@ static char **dir_search_p(const char *path, const char *pattern, int depth, cha
 
 	/* chain */
 	return *res;
+}
+
+char *trim(char *str)
+{
+	char *s = NULL;
+
+	while(isspace(*str++));
+
+	char *left = --str;
+
+	/* -1 '\0' */
+	char *right = left + strlen(left) - 1;
+
+	while(isspace(*right))
+	{
+		*right-- = '\0';
+	}
+
+	s = left;
+
+	return s;
 }

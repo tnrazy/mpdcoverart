@@ -10,7 +10,7 @@
 #include "ui.h"
 #include "log.h"
 #include "utils.h"
-#include "setting.h"
+#include "config.h"
 
 #include <stdio.h>
 #include <unistd.h>
@@ -54,12 +54,16 @@ void ui_skin_free(struct ui_skin *ptr)
 		return;
 
 	if(ptr->name)
+	{
 		free(ptr->name);
+	}
 
 	if(ptr->albumcover)
 	{
 		if(ptr->albumcover->nocover)
+		{
 			free(ptr->albumcover->nocover);
+		}
 
 		free(ptr->albumcover);
 	}
@@ -277,6 +281,21 @@ struct ui_skin_entity **ui_skin_load_all()
 			{
 				xmlFreeDoc(doc);
 				goto next;
+			}
+
+			if(list)
+			{
+				for(struct ui_skin_entity **skin_list = list, *skin = *skin_list; skin;)
+				{
+					if(strcmp(skin->skin_name, skin_name) == 0)
+					{
+						_WARN("Skin name has exist");
+						xmlFreeDoc(doc);
+						goto next;
+					}
+
+					skin = *++skin_list;
+				}
 			}
 
 			if(list == NULL)

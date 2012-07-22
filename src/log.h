@@ -10,7 +10,7 @@
 #ifndef LOG_H
 #define LOG_H
 
-//#define MSG2_TERM
+#define MSG2_TERM
 #define MSG2_FILE
 
 #define STR2(X)                         #X

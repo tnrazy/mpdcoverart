@@ -114,4 +114,7 @@ char *clean_name(char *name);
 #define DIR_SEARCH_DEPTH	7
 
 char **dir_search(const char *path, const char *pattern, int depth, int max_matched);
+
+char *trim(char *str);
+
 #endif

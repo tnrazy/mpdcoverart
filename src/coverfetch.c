@@ -10,7 +10,7 @@
 #define ___DEBUG
 
 #include "coverfetch.h"
-#include "setting.h"
+#include "config.h"
 #include "log.h"
 #include "utils.h"
 
@@ -30,24 +30,11 @@ char *getcover(const char *uri, const char *artist, const char *title, const cha
 {
     	char *cover = NULL, *cover_path, *music_path, *cmd, newname[1024];
 
-	if(uri == NULL)
-	{
-		_ERROR("Music URI is null.");
-		return NULL;
-	}
-    
 	/* get cover from local */
 	if(cover = getcover_local(uri, artist, title), cover)
 	{
 		_INFO("Find Cover: %s", cover);
 		return cover;
-	}
-
-	if(fetch == NULL)
-	{
-		_WARN("Fetcher is null.");
-
-		return NULL;
 	}
 
 	/* else get cover from network */
@@ -209,7 +196,7 @@ static char *getcover_local(const char *uri, const char *artist, const char *tit
 		snprintf(pattern, sizeof pattern, "^%s.(jpg|png|JPG|PNG)$", tmp);
 		free(tmp);
 
-		_DEBUG("Search local path: %s, %s", cover_path, pattern);
+		_DEBUG("Search cover from cover path: %s, %s", cover_path, pattern);
 
 		/* search cover in the COVERPATH, directory's depth is 0, not search the child directory, max matched 1 */
 		if(cover_list = dir_search(cover_path, pattern, 0, 1), cover_list)
@@ -231,7 +218,9 @@ static char *getcover_local(const char *uri, const char *artist, const char *tit
 
 	/* remove music file name */
 	if(strrchr(pattern, '/'))
+	{
 		*(strrchr(pattern, '/') + 1) = '\0';
+	}
 
 	/* get cover from the music path */
 	for(char *list = cfg_get_rule(), *buf = list; buf;)
@@ -248,7 +237,7 @@ static char *getcover_local(const char *uri, const char *artist, const char *tit
 		/* remove the separator ";" */
 		*(rule + strlen(rule) - 1) = '\0';
 
-		_DEBUG("Search local: %s, %s", pattern, rule);
+		_DEBUG("Search cover from music path: %s, %s", pattern, rule);
 
 		if(cover_list = dir_search(pattern, rule, 0, 1), cover_list)
 		{

@@ -8,7 +8,7 @@
  */
 
 #include "player.h"
-#include "setting.h"
+#include "config.h"
 #include "ui.h"
 
 #include <stdio.h>

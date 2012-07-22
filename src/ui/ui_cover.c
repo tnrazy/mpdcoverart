@@ -8,7 +8,6 @@
  */
 
 #include "coverfetch.h"
-#include "coverfetch.h"
 #include "player.h"
 #include "ui.h"
 

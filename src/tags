@@ -6,18 +6,24 @@
 !_TAG_PROGRAM_VERSION	5.8	//
 AT	log.h	18;"	d
 BEGIN_WITH	utils.h	36;"	d
+CFGHOMENAME	config.h	14;"	d
 CFGHOMENAME	setting.h	14;"	d
+CFGNAME	config.h	13;"	d
 CFGNAME	setting.h	13;"	d
+CFG_MAP	config.h	/^	CFG_MAP(XX)$/;"	e	enum:cfg_keys
+CFG_MAP	config.h	16;"	d
 CFG_MAP	setting.h	/^	CFG_MAP(XX)$/;"	e	enum:cfg_keys
 CFG_MAP	setting.h	16;"	d
+CFG_UNKNOW	config.h	/^    	CFG_UNKNOW$/;"	e	enum:cfg_keys
 CFG_UNKNOW	setting.h	/^    	CFG_UNKNOW$/;"	e	enum:cfg_keys
 COLOR_CODE	log.h	36;"	d
 COLOR_END	log.h	38;"	d
 COLOR_MAP	log.h	/^COLOR_MAP(XX)$/;"	e	enum:color_types
 COLOR_MAP	log.h	20;"	d
 COLOR_START	log.h	37;"	d
+CONFIG_H	config.h	11;"	d
 CONTEXT_TYPE_MAP	http.h	/^CONTEXT_TYPE_MAP(XX)$/;"	e	enum:http_cxt_types
-CONTEXT_TYPE_MAP	http.h	54;"	d
+CONTEXT_TYPE_MAP	http.h	44;"	d
 COVERFETCH_H	coverfetch.h	11;"	d
 COVERPATTERN	doubancover.c	38;"	d	file:
 DCRLF	http.h	25;"	d
@@ -63,8 +69,10 @@ HTTP_HDR_SIZE	http.h	24;"	d
 HTTP_MTD_UNKNOW	http.h	/^HTTP_MTD_UNKNOW$/;"	e	enum:http_mtd_types
 HTTP_NOCOOKIE	http.h	/^    HTTP_NOCOOKIE, HTTP_COOKIE$/;"	e	enum:http_flags
 INFO_NA	ui/ui_player_info.c	17;"	d	file:
-INIT_CHK	setting.c	52;"	d	file:
-INIT_OK	setting.c	53;"	d	file:
+INIT_CHK	config.c	50;"	d	file:
+INIT_CHK	setting.c	54;"	d	file:
+INIT_OK	config.c	51;"	d	file:
+INIT_OK	setting.c	55;"	d	file:
 KB	http.h	19;"	d
 LAB_FORMAT	ui/ui_player_info.c	16;"	d	file:
 LIST_H	list.h	11;"	d
@@ -97,16 +105,20 @@ TIMEOUT_WRITE	utils.h	/^    TIMEOUT_WRITE       = 1 << 1,$/;"	e	enum:time_flag
 UAGENT	http.h	27;"	d
 UI_H	ui/ui.h	11;"	d
 UTILS_H	utils.h	11;"	d
+XX	config.c	33;"	d	file:
+XX	config.c	35;"	d	file:
+XX	config.h	28;"	d
+XX	config.h	30;"	d
+XX	http.h	124;"	d
+XX	http.h	126;"	d
 XX	http.h	134;"	d
 XX	http.h	136;"	d
 XX	http.h	144;"	d
 XX	http.h	146;"	d
-XX	http.h	154;"	d
-XX	http.h	156;"	d
+XX	http.h	53;"	d
+XX	http.h	55;"	d
+XX	http.h	61;"	d
 XX	http.h	63;"	d
-XX	http.h	65;"	d
-XX	http.h	71;"	d
-XX	http.h	73;"	d
 XX	log.c	25;"	d	file:
 XX	log.c	27;"	d	file:
 XX	log.c	35;"	d	file:
@@ -126,8 +138,12 @@ _DEBUG	log.h	78;"	d
 _ERROR	log.h	73;"	d
 _INFO	log.h	71;"	d
 _WARN	log.h	72;"	d
+___DEBUG	config.c	10;"	d	file:
 ___DEBUG	coverfetch.c	10;"	d	file:
+___DEBUG	http_fetch.c	10;"	d	file:
 ___DEBUG	list.c	10;"	d	file:
+___DEBUG	mpd.c	10;"	d	file:
+___DEBUG	setting.c	10;"	d	file:
 ___MSG	log.h	42;"	d
 ___MSG	log.h	44;"	d
 ___TEMPLATE_INIT	http_compile.c	11;"	d	file:
@@ -138,50 +154,96 @@ albumcover	ui/ui.h	/^	struct ui_skin_albumcover *albumcover;$/;"	m	struct:ui_ski
 align	ui/ui.h	/^	float align;$/;"	m	struct:ui_skin_label	access:public
 artist	player.h	/^	char *artist;$/;"	m	struct:player_music_info	access:public
 artist	ui/ui.h	/^	struct ui_skin_label *artist;$/;"	m	struct:ui_skin	typeref:struct:ui_skin::ui_skin_label	access:public
+cfg	config.c	/^struct cfg$/;"	s	file:
 cfg	setting.c	/^struct cfg$/;"	s	file:
 cfg::cfggrp	setting.c	/^        char *cfggrp;$/;"	m	struct:cfg	file:	access:public
+cfg::cfgkey	config.c	/^        enum cfg_keys cfgkey;$/;"	m	struct:cfg	typeref:enum:cfg::cfg_keys	file:	access:public
 cfg::cfgkey	setting.c	/^        char *cfgkey;$/;"	m	struct:cfg	file:	access:public
 cfg::idx	setting.c	/^        int idx;$/;"	m	struct:cfg	file:	access:public
+cfg::name	config.c	/^        char *name;$/;"	m	struct:cfg	file:	access:public
+cfg::value	config.c	/^        void *value;$/;"	m	struct:cfg	file:	access:public
 cfg::value	setting.c	/^        void *value;$/;"	m	struct:cfg	file:	access:public
+cfg_check	config.c	/^static void cfg_check()$/;"	f	file:
+cfg_check	config.c	/^static void cfg_check();$/;"	p	file:
+cfg_check	setting.c	/^static void cfg_check()$/;"	f	file:
+cfg_check	setting.c	/^static void cfg_check();$/;"	p	file:
 cfg_filename	setting.c	/^static char *cfg_filename;$/;"	v	file:
+cfg_get	config.c	/^static char *cfg_get(enum cfg_keys cfg_key)$/;"	f	file:	signature:(enum cfg_keys cfg_key)
+cfg_get	config.c	/^static char *cfg_get(enum cfg_keys cfg_key);$/;"	p	file:	signature:(enum cfg_keys cfg_key)
 cfg_get	setting.c	/^static char *cfg_get(enum cfg_keys cfg_key)$/;"	f	file:	signature:(enum cfg_keys cfg_key)
 cfg_get	setting.c	/^static char *cfg_get(enum cfg_keys cfg_key);$/;"	p	file:	signature:(enum cfg_keys cfg_key)
+cfg_get_coverpath	config.c	/^char *cfg_get_coverpath()$/;"	f
+cfg_get_coverpath	config.h	/^char *cfg_get_coverpath();$/;"	p	signature:()
 cfg_get_coverpath	setting.c	/^char *cfg_get_coverpath()$/;"	f
 cfg_get_coverpath	setting.h	/^char *cfg_get_coverpath();$/;"	p	signature:()
+cfg_get_logfile	config.c	/^char *cfg_get_logfile()$/;"	f
+cfg_get_logfile	config.h	/^char *cfg_get_logfile();$/;"	p	signature:()
 cfg_get_logfile	setting.c	/^char *cfg_get_logfile()$/;"	f
 cfg_get_logfile	setting.h	/^char *cfg_get_logfile();$/;"	p	signature:()
+cfg_get_musicpath	config.c	/^char *cfg_get_musicpath()$/;"	f
+cfg_get_musicpath	config.h	/^char *cfg_get_musicpath();$/;"	p	signature:()
 cfg_get_musicpath	setting.c	/^char *cfg_get_musicpath()$/;"	f
 cfg_get_musicpath	setting.h	/^char *cfg_get_musicpath();$/;"	p	signature:()
+cfg_get_pos_lock	config.c	/^unsigned int cfg_get_pos_lock()$/;"	f
+cfg_get_pos_lock	config.h	/^unsigned int cfg_get_pos_lock();$/;"	p	signature:()
 cfg_get_pos_lock	setting.c	/^unsigned int cfg_get_pos_lock()$/;"	f
 cfg_get_pos_lock	setting.h	/^unsigned int cfg_get_pos_lock();$/;"	p	signature:()
+cfg_get_pos_x	config.c	/^unsigned int cfg_get_pos_x()$/;"	f
+cfg_get_pos_x	config.h	/^unsigned int cfg_get_pos_x();$/;"	p	signature:()
 cfg_get_pos_x	setting.c	/^unsigned int cfg_get_pos_x()$/;"	f
 cfg_get_pos_x	setting.h	/^unsigned int cfg_get_pos_x();$/;"	p	signature:()
+cfg_get_pos_y	config.c	/^unsigned int cfg_get_pos_y()$/;"	f
+cfg_get_pos_y	config.h	/^unsigned int cfg_get_pos_y();$/;"	p	signature:()
 cfg_get_pos_y	setting.c	/^unsigned int cfg_get_pos_y()$/;"	f
 cfg_get_pos_y	setting.h	/^unsigned int cfg_get_pos_y();$/;"	p	signature:()
+cfg_get_rule	config.c	/^char *cfg_get_rule()$/;"	f
+cfg_get_rule	config.h	/^char *cfg_get_rule();$/;"	p	signature:()
 cfg_get_rule	setting.c	/^char *cfg_get_rule()$/;"	f
 cfg_get_rule	setting.h	/^char *cfg_get_rule();$/;"	p	signature:()
+cfg_get_skinname	config.c	/^char *cfg_get_skinname()$/;"	f
+cfg_get_skinname	config.h	/^char *cfg_get_skinname();$/;"	p	signature:()
 cfg_get_skinname	setting.c	/^char *cfg_get_skinname()$/;"	f
 cfg_get_skinname	setting.h	/^char *cfg_get_skinname();$/;"	p	signature:()
+cfg_get_skinpath	config.c	/^char *cfg_get_skinpath()$/;"	f
+cfg_get_skinpath	config.h	/^char *cfg_get_skinpath();$/;"	p	signature:()
 cfg_get_skinpath	setting.c	/^char *cfg_get_skinpath()$/;"	f
 cfg_get_skinpath	setting.h	/^char *cfg_get_skinpath();$/;"	p	signature:()
+cfg_init	config.c	/^static int cfg_init;$/;"	v	file:
 cfg_init	setting.c	/^static int cfg_init;$/;"	v	file:
+cfg_keys	config.h	/^enum cfg_keys$/;"	g
 cfg_keys	setting.h	/^enum cfg_keys$/;"	g
+cfg_load	config.c	/^void cfg_load(const char *cfg_filename)$/;"	f	signature:(const char *cfg_filename)
+cfg_load	config.h	/^void cfg_load();$/;"	p	signature:()
 cfg_load	setting.c	/^void cfg_load()$/;"	f
 cfg_load	setting.h	/^void cfg_load();$/;"	p	signature:()
+cfg_refresh	config.c	/^void cfg_refresh()$/;"	f
+cfg_refresh	config.h	/^void cfg_refresh();$/;"	p	signature:()
 cfg_refresh	setting.c	/^void cfg_refresh()$/;"	f
 cfg_refresh	setting.h	/^void cfg_refresh();$/;"	p	signature:()
+cfg_resolver	config.c	/^static FILE *cfg_resolver(const char *cfg_filename)$/;"	f	file:	signature:(const char *cfg_filename)
+cfg_resolver	config.c	/^static FILE *cfg_resolver(const char *cfg_filename);$/;"	p	file:	signature:(const char *cfg_filename)
 cfg_resolver	setting.c	/^static GKeyFile *cfg_resolver()$/;"	f	file:
 cfg_resolver	setting.c	/^static GKeyFile *cfg_resolver();$/;"	p	file:
+cfg_set	config.c	/^static void cfg_set(enum cfg_keys cfg_key, const char *value)$/;"	f	file:	signature:(enum cfg_keys cfg_key, const char *value)
+cfg_set	config.c	/^static void cfg_set(enum cfg_keys, const char *value);$/;"	p	file:	signature:(enum cfg_keys, const char *value)
 cfg_set	setting.c	/^static void cfg_set(enum cfg_keys cfg_key, const char *value)$/;"	f	file:	signature:(enum cfg_keys cfg_key, const char *value)
 cfg_set	setting.c	/^static void cfg_set(enum cfg_keys, const char *value);$/;"	p	file:	signature:(enum cfg_keys, const char *value)
+cfg_set_postion	config.c	/^void cfg_set_postion(const char *xy)$/;"	f	signature:(const char *xy)
+cfg_set_postion	config.h	/^void cfg_set_postion(const char *xy);$/;"	p	signature:(const char *xy)
 cfg_set_postion	setting.c	/^void cfg_set_postion(const char *xy)$/;"	f	signature:(const char *xy)
 cfg_set_postion	setting.h	/^void cfg_set_postion(const char *xy);$/;"	p	signature:(const char *xy)
+cfg_set_postion_lock	config.c	/^void cfg_set_postion_lock()$/;"	f
+cfg_set_postion_lock	config.h	/^void cfg_set_postion_lock();$/;"	p	signature:()
 cfg_set_postion_lock	setting.c	/^void cfg_set_postion_lock()$/;"	f
 cfg_set_postion_lock	setting.h	/^void cfg_set_postion_lock();$/;"	p	signature:()
+cfg_set_skinname	config.c	/^void cfg_set_skinname(const char *skin_name)$/;"	f	signature:(const char *skin_name)
+cfg_set_skinname	config.h	/^void cfg_set_skinname(const char *skin_name);$/;"	p	signature:(const char *skin_name)
 cfg_set_skinname	setting.c	/^void cfg_set_skinname(const char *skin_name)$/;"	f	signature:(const char *skin_name)
 cfg_set_skinname	setting.h	/^void cfg_set_skinname(const char *skin_name);$/;"	p	signature:(const char *skin_name)
 cfggrp	setting.c	/^        char *cfggrp;$/;"	m	struct:cfg	file:	access:public
+cfgkey	config.c	/^        enum cfg_keys cfgkey;$/;"	m	struct:cfg	typeref:enum:cfg::cfg_keys	file:	access:public
 cfgkey	setting.c	/^        char *cfgkey;$/;"	m	struct:cfg	file:	access:public
+cfgs	config.c	/^static struct cfg cfgs[] = $/;"	v	typeref:struct:cfg	file:
 cfgs	setting.c	/^static struct cfg cfgs[] = $/;"	v	typeref:struct:cfg	file:
 clean_name	utils.c	/^char *clean_name(char *name)$/;"	f	signature:(char *name)
 clean_name	utils.h	/^char *clean_name(char *name);$/;"	p	signature:(char *name)
@@ -233,8 +295,6 @@ file_type::tname	http.h	/^    char *tname;$/;"	m	struct:file_type	access:public
 font	ui/ui.h	/^	char *font;$/;"	m	struct:ui_skin_label	access:public
 from_hex	utils.c	/^static char from_hex(char ch)$/;"	f	file:	signature:(char ch)
 from_hex	utils.c	/^static char from_hex(char ch);$/;"	p	file:	signature:(char ch)
-get_ln	utils.c	/^char *get_ln(char *src, char *buf, size_t size, const char *token)$/;"	f	signature:(char *src, char *buf, size_t size, const char *token)
-get_ln	utils.h	/^char *get_ln(char *src, char *buf, size_t size, const char *token);$/;"	p	signature:(char *src, char *buf, size_t size, const char *token)
 getcover	coverfetch.c	/^char *getcover(const char *uri, const char *artist, const char *title, const char *album, coverfetch fetch)$/;"	f	signature:(const char *uri, const char *artist, const char *title, const char *album, coverfetch fetch)
 getcover	coverfetch.h	/^char *getcover(const char *uri, const char *artist, const char *title, const char *album, coverfetch fetch);$/;"	p	signature:(const char *uri, const char *artist, const char *title, const char *album, coverfetch fetch)
 getcover_local	coverfetch.c	/^static char *getcover_local(const char *uri, const char *artist, const char *title)$/;"	f	file:	signature:(const char *uri, const char *artist, const char *title)
@@ -289,8 +349,6 @@ http_req_hdr_get	http.h	/^char *http_req_hdr_get(char *host, char *uri, enum htt
 http_req_hdr_get	http_compile.c	/^char *http_req_hdr_get(char *host, char *uri, enum http_cxt_types type, char *data)$/;"	f	signature:(char *host, char *uri, enum http_cxt_types type, char *data)
 http_req_hdr_hdr	http.h	/^char *http_req_hdr_hdr(char *host, char *uri, enum http_cxt_types type, char *data);$/;"	p	signature:(char *host, char *uri, enum http_cxt_types type, char *data)
 http_req_hdr_hdr	http_compile.c	/^char *http_req_hdr_hdr(char *host, char *uri, enum http_cxt_types type, char *data)$/;"	f	signature:(char *host, char *uri, enum http_cxt_types type, char *data)
-http_req_hdr_post	http.h	/^char *http_req_hdr_post(char *host, char *uri, enum http_cxt_types type, char *data);$/;"	p	signature:(char *host, char *uri, enum http_cxt_types type, char *data)
-http_req_hdr_post	http_compile.c	/^char *http_req_hdr_post(char *host, char *uri, enum http_cxt_types type, char *data)$/;"	f	signature:(char *host, char *uri, enum http_cxt_types type, char *data)
 http_res	http.h	/^struct http_res$/;"	s
 http_res::cookie	http.h	/^    char *cookie;$/;"	m	struct:http_res	access:public
 http_res::length	http.h	/^    unsigned long length;$/;"	m	struct:http_res	access:public
@@ -341,6 +399,7 @@ msg_color	log.c	/^int msg_color[] = $/;"	v
 msg_out	log.c	/^int msg_out[] =$/;"	v
 msg_prefix	log.c	/^char *msg_prefix[] =$/;"	v
 msg_types	log.h	/^enum msg_types$/;"	g
+name	config.c	/^        char *name;$/;"	m	struct:cfg	file:	access:public
 name	ui/ui.h	/^	char *name;$/;"	m	struct:ui_skin	access:public
 next	list.h	/^    struct Dlist *next;$/;"	m	struct:Dlist	typeref:struct:Dlist::Dlist	access:public
 nocover	ui/ui.h	/^	char *nocover;$/;"	m	struct:ui_skin_albumcover	access:public
@@ -389,6 +448,8 @@ src	ui/ui.h	/^	char *src;$/;"	m	struct:ui_skin_image	access:public
 status_code	http.h	/^    unsigned int status_code;$/;"	m	struct:http_res	access:public
 strstr_igcase	utils.c	/^char *strstr_igcase(const char *str, const char *need, int contain_need)$/;"	f	signature:(const char *str, const char *need, int contain_need)
 strstr_igcase	utils.h	/^char *strstr_igcase(const char *str, const char *need, int contain_need);$/;"	p	signature:(const char *str, const char *need, int contain_need)
+strstr_ln	utils.c	/^char *strstr_ln(char *src, char *buf, size_t size, const char *token)$/;"	f	signature:(char *src, char *buf, size_t size, const char *token)
+strstr_ln	utils.h	/^char *strstr_ln(char *src, char *buf, size_t size, const char *token);$/;"	p	signature:(char *src, char *buf, size_t size, const char *token)
 tail	http.h	/^    char *tail;$/;"	m	struct:http_res	access:public
 tail_len	http.h	/^    unsigned long tail_len;$/;"	m	struct:http_res	access:public
 time_flag	utils.h	/^enum time_flag$/;"	g
@@ -399,6 +460,8 @@ title	ui/ui.h	/^	struct ui_skin_label *title;$/;"	m	struct:ui_skin	typeref:struc
 tname	http.h	/^    char *tname;$/;"	m	struct:file_type	access:public
 to_hex	utils.c	/^static char to_hex(char ch)$/;"	f	file:	signature:(char ch)
 to_hex	utils.c	/^static char to_hex(char ch);$/;"	p	file:	signature:(char ch)
+trim	utils.c	/^char *trim(char *str)$/;"	f	signature:(char *str)
+trim	utils.h	/^char *trim(char *str);$/;"	p	signature:(char *str)
 type	http.h	/^    struct file_type *type;$/;"	m	struct:http_res	typeref:struct:http_res::file_type	access:public
 ui_cover_init	ui/ui.h	/^void ui_cover_init(GtkWidget *fixed, GtkWidget *cover_container);$/;"	p	signature:(GtkWidget *fixed, GtkWidget *cover_container)
 ui_cover_init	ui/ui_cover.c	/^void ui_cover_init(GtkWidget *fixed, GtkWidget *cover_container)$/;"	f	signature:(GtkWidget *fixed, GtkWidget *cover_container)
@@ -494,6 +557,7 @@ url_decode	utils.c	/^char *url_decode(const char *str)$/;"	f	signature:(const ch
 url_decode	utils.h	/^char *url_decode(const char *str);$/;"	p	signature:(const char *str)
 url_encode	utils.c	/^char *url_encode(const char *str)$/;"	f	signature:(const char *str)
 url_encode	utils.h	/^char *url_encode(const char *str);$/;"	p	signature:(const char *str)
+value	config.c	/^        void *value;$/;"	m	struct:cfg	file:	access:public
 value	setting.c	/^        void *value;$/;"	m	struct:cfg	file:	access:public
 value_free	list.h	/^typedef void (*value_free)(void *);$/;"	t
 width	ui/ui.h	/^	int width;$/;"	m	struct:ui_skin	access:public
