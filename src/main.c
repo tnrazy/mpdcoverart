@@ -138,16 +138,17 @@ static void usage()
 	fprintf(stderr, "\tmpdcoverart [OPTIONS...]\n");
 	fprintf(stderr, "\n\n");
 
-	fprintf(stderr, "Get cover art from douban.com.\n");
-	fprintf(stderr, "Lastest version: \033[1;4mhttp://github.com/tnrazy/mpdcovrtart\033[0m\n");
+	fprintf(stderr, "Description:\n");
+	fprintf(stderr, "\tGet cover art from douban.com\n");
+	fprintf(stderr, "\tLastest version: \033[1;4mhttp://github.com/tnrazy/mpdcovrtart\033[0m\n");
 	fprintf(stderr, "\n\n");
 
 	fprintf(stderr, "Options:\n");
-	fprintf(stderr, "\t-h, --help\t\t\tshow help options.\n");
-	fprintf(stderr, "\t-v, --version\t\t\tshow version.\n");
-	fprintf(stderr, "\t-d, --debug\t\t\tdebug.\n");
-	fprintf(stderr, "\t-t, --test\t\t\tcheck config.\n");
-	fprintf(stderr, "\t-c, --config [FILENAME]\t\tspecified cofnig file.\n");
+	fprintf(stderr, "\t-h, --help\t\t\tshow help options\n");
+	fprintf(stderr, "\t-v, --version\t\t\tshow version\n");
+	fprintf(stderr, "\t-d, --debug\t\t\tdebug\n");
+	fprintf(stderr, "\t-t, --test\t\t\tcheck config\n");
+	fprintf(stderr, "\t-c, --config [FILENAME]\t\tspecified cofnig file\n");
 
 	fprintf(stderr, "\n");
 
