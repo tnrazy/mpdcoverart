@@ -79,9 +79,10 @@ void cfg_load(char *filename)
 
 	if(filename != NULL)
 	{
+		_DEBUG("%s", filename);
 		if(access(filename, F_OK | R_OK) == -1)
 		{
-			die("Config file '%s' not exists ot can not be read", filename);
+			die("Config file '%s' not exists or can not be read", filename);
 		}
 
 		/* save config file name */

@@ -26,6 +26,8 @@ static void version();
 
 static void test_config(char *filename);
 
+static void sig_exit(int signo);
+
 int main(int argc, const char **argv)
 {
 	char *cfg_fileanme = NULL;
@@ -59,6 +61,12 @@ int main(int argc, const char **argv)
 
 			case 'd':
 				cfg_set_debug();
+
+				if(signal(SIGINT, sig_exit) == SIG_ERR)
+				{
+					die("Failed to regist signal: %s", strerror(errno));
+				}
+
 				break;
 
 			case 't':
@@ -74,6 +82,7 @@ int main(int argc, const char **argv)
 		}
 	}
 
+	_INFO("config file name: %s", cfg_fileanme);
 	cfg_load(cfg_fileanme);
 
 	if(!cfg_get_debug())
@@ -82,7 +91,7 @@ int main(int argc, const char **argv)
 
 		if(signal(SIGHUP, SIG_IGN) == SIG_ERR)
 		{
-			die("Regist SIGHUP error: %s", strerror(errno));
+			die("Failed to regist signal: %s", strerror(errno));
 		}
 
 		switch(fork())
@@ -109,9 +118,11 @@ int main(int argc, const char **argv)
 			die("Failed to change working directory: %s", strerror(errno));
 		}
 
+		/* close stdin */
 		close(STDIN_FILENO);
-		close(STDOUT_FILENO);
-		close(STDERR_FILENO);
+
+		stderr = freopen("/dev/null", "rw", stderr);
+		stdout = freopen("/dev/null", "rw", stdout);
 	}
 
 	char *skin_name = cfg_get_skinname();
@@ -161,5 +172,11 @@ static void test_config(char *filename)
 
 	cfg_load(filename);
 
+	exit(EXIT_SUCCESS);
+}
+
+static void sig_exit(int signo)
+{
+	fprintf(stderr, "%s\n", "Ctrl + c, exit...");
 	exit(EXIT_SUCCESS);
 }

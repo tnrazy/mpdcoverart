@@ -281,6 +281,7 @@ static int http_res_attr(char *hdr, struct http_res *res)
 		/* other things */
 	}
 
+	_ERROR("Values: %d", valid);
 	/* check return value if 0 just free res */
 	return valid == 1 ? field : 0;
 }
