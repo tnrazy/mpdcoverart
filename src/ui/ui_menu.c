@@ -153,7 +153,7 @@ static int e_menu_popup(GtkWidget *widget, GdkEventButton *event, void *data)
 static void s_menu_quit(GtkWidget *widget, GdkEventButton *event)
 {
 	/* quit */
-	gtk_main_quit();
+	exit(EXIT_SUCCESS);
 }
 
 static void s_menu_lock(GtkWidget *widget, GdkEventButton *event)
