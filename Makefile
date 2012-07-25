@@ -47,8 +47,11 @@ clean:
 install: main
 	mkdir -p /usr/share/mpdcoverart
 	cp -rv "Magnifique Bright" /usr/share/mpdcoverart/
+	mkdir -p ~/.config/mpdcoverart
+	cp -rv mpdcoverart.conf ~/.config/mpdcoverart/
 	cp $(BINNAME) /usr/bin/
 
 uninstall:
-	rm -rf /usr/share/mpdcoverart/
+	rm -rfv /usr/share/mpdcoverart/
+	rm -rfv ~/.config/mpdcoverart/
 	rm /usr/bin/$(BINNAME)
