@@ -59,17 +59,17 @@ void prmsg(enum msg_types msg_type, const char *format, ...)
 		return;
 	}
 
-	if(msg_type < 0 || msg_type >= MSG_UNKNOW)
+	if(msg_type < 0)
 	{
-		___MSG(stderr,  msg_prefix[MSG_ERROR], 
-		  		"Error message type.", 
-		  		msg_color[MSG_ERROR], 
-		 	 	AT);
-
-		return;
+		msg_type = MSG_INFO;
+	}
+	
+	if(msg_type > MSG_UNKNOW)
+	{
+		msg_type = MSG_ERROR;
 	}
 
-	char msg_buf[BUFSIZ] = { 0 };
+	char msg_buf[BUFSIZ];
 	memset(&msg_buf, 0, BUFSIZ);
 
 	va_list ap;

@@ -69,6 +69,8 @@ struct ui_skin_entity
 };
 
 #define DEF_SKIN 			"default"
+#define TRAY_ICON 			"tray.png"
+#define TRAY_SIZE 			32
 
 void ui_skin_free(struct ui_skin *ptr);
 
@@ -93,6 +95,8 @@ void ui_player_info_init(GtkWidget *fixed);
 void ui_player_info_update(struct player_music_info *info);
 
 void ui_menu_init(GtkWidget *menu_container);
+
+void ui_tray_init();
 
 void ui_load();
 

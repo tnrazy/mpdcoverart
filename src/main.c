@@ -8,8 +8,8 @@
  */
 
 #include "log.h"
-#include "config.h"
 #include "ui.h"
+#include "config.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -24,7 +24,7 @@ static void usage();
 
 static void version();
 
-static void test_config(char *filename);
+static void test_config(const char *filename);
 
 static void sig_exit(int signo);
 
@@ -82,7 +82,7 @@ int main(int argc, const char **argv)
 		}
 	}
 
-	_INFO("config file name: %s", cfg_fileanme);
+	_DEBUG("config file name: %s", cfg_fileanme);
 	cfg_load(cfg_fileanme);
 
 	if(!cfg_get_debug())
@@ -166,7 +166,7 @@ static void usage()
 	exit(EXIT_SUCCESS);
 }
 
-static void test_config(char *filename)
+static void test_config(const char *filename)
 {
 	cfg_set_debug();
 
@@ -177,6 +177,6 @@ static void test_config(char *filename)
 
 static void sig_exit(int signo)
 {
-	fprintf(stderr, "%s\n", "Ctrl + c, exit...");
+	fprintf(stderr, "%s\n", "\b\rCtrl + c, exit...");
 	exit(EXIT_SUCCESS);
 }

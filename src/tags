@@ -7,15 +7,10 @@
 AT	log.h	18;"	d
 BEGIN_WITH	utils.h	36;"	d
 CFGHOMENAME	config.h	14;"	d
-CFGHOMENAME	setting.h	14;"	d
 CFGNAME	config.h	13;"	d
-CFGNAME	setting.h	13;"	d
 CFG_MAP	config.h	/^	CFG_MAP(XX)$/;"	e	enum:cfg_keys
 CFG_MAP	config.h	16;"	d
-CFG_MAP	setting.h	/^	CFG_MAP(XX)$/;"	e	enum:cfg_keys
-CFG_MAP	setting.h	16;"	d
 CFG_UNKNOW	config.h	/^    	CFG_UNKNOW$/;"	e	enum:cfg_keys
-CFG_UNKNOW	setting.h	/^    	CFG_UNKNOW$/;"	e	enum:cfg_keys
 COLOR_CODE	log.h	36;"	d
 COLOR_END	log.h	38;"	d
 COLOR_MAP	log.h	/^COLOR_MAP(XX)$/;"	e	enum:color_types
@@ -32,34 +27,6 @@ DEF_PORT	http.h	15;"	d
 DEF_SKIN	ui/ui.h	71;"	d
 DEF_TIMEOUT	http.h	16;"	d
 DIR_SEARCH_DEPTH	utils.h	114;"	d
-Dlist	list.h	/^typedef struct Dlist$/;"	s
-Dlist	list.h	/^} Dlist;$/;"	t	typeref:struct:Dlist
-Dlist::entity	list.h	/^    Dlist_entity *entity;$/;"	m	struct:Dlist	access:public
-Dlist::key	list.h	/^    char *key;$/;"	m	struct:Dlist	access:public
-Dlist::next	list.h	/^    struct Dlist *next;$/;"	m	struct:Dlist	typeref:struct:Dlist::Dlist	access:public
-Dlist::prev	list.h	/^    struct Dlist *prev;$/;"	m	struct:Dlist	typeref:struct:Dlist::Dlist	access:public
-Dlist_add	list.c	/^Dlist *Dlist_add(Dlist *list, char *key, Dlist_entity *entity)$/;"	f	signature:(Dlist *list, char *key, Dlist_entity *entity)
-Dlist_add	list.h	/^Dlist *Dlist_add(Dlist *list, char *key, Dlist_entity *entity);$/;"	p	signature:(Dlist *list, char *key, Dlist_entity *entity)
-Dlist_del	list.c	/^Dlist *Dlist_del(Dlist *list, char *key)$/;"	f	signature:(Dlist *list, char *key)
-Dlist_del	list.h	/^Dlist *Dlist_del(Dlist *list, char *key);$/;"	p	signature:(Dlist *list, char *key)
-Dlist_entity	list.h	/^typedef struct Dlist_entity$/;"	s
-Dlist_entity	list.h	/^} Dlist_entity;$/;"	t	typeref:struct:Dlist_entity
-Dlist_entity::data	list.h	/^    void *data;$/;"	m	struct:Dlist_entity	access:public
-Dlist_entity::des	list.h	/^    value_free des;$/;"	m	struct:Dlist_entity	access:public
-Dlist_entity_get	list.c	/^Dlist_entity *Dlist_entity_get(Dlist *list, char *key)$/;"	f	signature:(Dlist *list, char *key)
-Dlist_entity_get	list.h	/^Dlist_entity *Dlist_entity_get(Dlist *list, char *key);$/;"	p	signature:(Dlist *list, char *key)
-Dlist_entity_new	list.c	/^Dlist_entity *Dlist_entity_new(void *data, size_t size, value_free des)$/;"	f	signature:(void *data, size_t size, value_free des)
-Dlist_entity_new	list.h	/^Dlist_entity *Dlist_entity_new(void *value, size_t size, value_free des);$/;"	p	signature:(void *value, size_t size, value_free des)
-Dlist_find	list.c	/^Dlist *Dlist_find(Dlist *list, char *key)$/;"	f	signature:(Dlist *list, char *key)
-Dlist_find	list.h	/^Dlist *Dlist_find(Dlist *list, char *key);$/;"	p	signature:(Dlist *list, char *key)
-Dlist_free	list.c	/^void Dlist_free(Dlist *list)$/;"	f	signature:(Dlist *list)
-Dlist_free	list.h	/^void Dlist_free(Dlist *list);$/;"	p	signature:(Dlist *list)
-Dlist_get_size	list.c	/^int Dlist_get_size(Dlist *list)$/;"	f	signature:(Dlist *list)
-Dlist_get_size	list.h	/^int Dlist_get_size(Dlist *list);$/;"	p	signature:(Dlist *list)
-Dlist_insert	list.c	/^Dlist *Dlist_insert(Dlist *list, char *key_pos, char *key, Dlist_entity *entity)$/;"	f	signature:(Dlist *list, char *key_pos, char *key, Dlist_entity *entity)
-Dlist_insert	list.h	/^Dlist *Dlist_insert(Dlist *list, char *key_pos, char *key, Dlist_entity *entity);$/;"	p	signature:(Dlist *list, char *key_pos, char *key, Dlist_entity *entity)
-Dlist_new	list.c	/^Dlist *Dlist_new()$/;"	f
-Dlist_new	list.h	/^Dlist *Dlist_new();$/;"	p	signature:()
 GB	http.h	21;"	d
 HAS_FLAG	utils.h	35;"	d
 HTTP_COOKIE	http.h	/^    HTTP_NOCOOKIE, HTTP_COOKIE$/;"	e	enum:http_flags
@@ -69,19 +36,17 @@ HTTP_HDR_SIZE	http.h	24;"	d
 HTTP_MTD_UNKNOW	http.h	/^HTTP_MTD_UNKNOW$/;"	e	enum:http_mtd_types
 HTTP_NOCOOKIE	http.h	/^    HTTP_NOCOOKIE, HTTP_COOKIE$/;"	e	enum:http_flags
 INFO_NA	ui/ui_player_info.c	17;"	d	file:
-INIT_CHK	config.c	50;"	d	file:
-INIT_CHK	setting.c	54;"	d	file:
-INIT_OK	config.c	51;"	d	file:
-INIT_OK	setting.c	55;"	d	file:
+INIT_CHK	config.c	48;"	d	file:
+INIT_OK	config.c	49;"	d	file:
 KB	http.h	19;"	d
 LAB_FORMAT	ui/ui_player_info.c	16;"	d	file:
-LIST_H	list.h	11;"	d
 LOG_H	log.h	11;"	d
 MB	http.h	20;"	d
 METHOD_TYPE_MAP	http.h	/^METHOD_TYPE_MAP(XX)$/;"	e	enum:http_mtd_types
 METHOD_TYPE_MAP	http.h	29;"	d
 MPD_H	mpd.h	11;"	d
 MSG2_FILE	log.h	14;"	d
+MSG2_TERM	log.h	13;"	d
 MSG_MAP	log.h	/^    MSG_MAP(XX)$/;"	e	enum:msg_types
 MSG_MAP	log.h	47;"	d
 MSG_UNKNOW	log.h	/^    MSG_UNKNOW$/;"	e	enum:msg_types
@@ -92,7 +57,6 @@ PLAYER_PLAY	player.h	/^	PLAYER_PLAY,$/;"	e	enum:player_status
 PLAYER_STOP	player.h	/^	PLAYER_STOP,$/;"	e	enum:player_status
 PLAYER_UNKNOW	player.h	/^	PLAYER_UNKNOW$/;"	e	enum:player_status
 SEARCH_API	doubancover.c	33;"	d	file:
-SETTING_H	setting.h	11;"	d
 STR	log.h	17;"	d
 STR2	log.h	16;"	d
 TIMEOUT	doubancover.c	39;"	d	file:
@@ -102,11 +66,14 @@ TIMEOUT_ERROR	utils.h	/^    TIMEOUT_ERROR       = 1 << 2,$/;"	e	enum:time_flag
 TIMEOUT_READ	utils.h	/^    TIMEOUT_READ        = 1 << 0,$/;"	e	enum:time_flag
 TIMEOUT_UNKNOW	utils.h	/^    TIMEOUT_UNKNOW$/;"	e	enum:time_flag
 TIMEOUT_WRITE	utils.h	/^    TIMEOUT_WRITE       = 1 << 1,$/;"	e	enum:time_flag
+TRAY_ICON	ui/ui.h	72;"	d
+TRAY_SIZE	ui/ui.h	73;"	d
 UAGENT	http.h	27;"	d
 UI_H	ui/ui.h	11;"	d
 UTILS_H	utils.h	11;"	d
+VERSION	main.c	21;"	d	file:
+XX	config.c	31;"	d	file:
 XX	config.c	33;"	d	file:
-XX	config.c	35;"	d	file:
 XX	config.h	28;"	d
 XX	config.h	30;"	d
 XX	http.h	124;"	d
@@ -129,10 +96,6 @@ XX	log.h	30;"	d
 XX	log.h	32;"	d
 XX	log.h	59;"	d
 XX	log.h	61;"	d
-XX	setting.c	35;"	d	file:
-XX	setting.c	37;"	d	file:
-XX	setting.h	28;"	d
-XX	setting.h	30;"	d
 _DEBUG	log.h	76;"	d
 _DEBUG	log.h	78;"	d
 _ERROR	log.h	73;"	d
@@ -140,10 +103,9 @@ _INFO	log.h	71;"	d
 _WARN	log.h	72;"	d
 ___DEBUG	config.c	10;"	d	file:
 ___DEBUG	coverfetch.c	10;"	d	file:
+___DEBUG	http_compile.c	10;"	d	file:
 ___DEBUG	http_fetch.c	10;"	d	file:
-___DEBUG	list.c	10;"	d	file:
 ___DEBUG	mpd.c	10;"	d	file:
-___DEBUG	setting.c	10;"	d	file:
 ___MSG	log.h	42;"	d
 ___MSG	log.h	44;"	d
 ___TEMPLATE_INIT	http_compile.c	11;"	d	file:
@@ -155,96 +117,53 @@ align	ui/ui.h	/^	float align;$/;"	m	struct:ui_skin_label	access:public
 artist	player.h	/^	char *artist;$/;"	m	struct:player_music_info	access:public
 artist	ui/ui.h	/^	struct ui_skin_label *artist;$/;"	m	struct:ui_skin	typeref:struct:ui_skin::ui_skin_label	access:public
 cfg	config.c	/^struct cfg$/;"	s	file:
-cfg	setting.c	/^struct cfg$/;"	s	file:
-cfg::cfggrp	setting.c	/^        char *cfggrp;$/;"	m	struct:cfg	file:	access:public
 cfg::cfgkey	config.c	/^        enum cfg_keys cfgkey;$/;"	m	struct:cfg	typeref:enum:cfg::cfg_keys	file:	access:public
-cfg::cfgkey	setting.c	/^        char *cfgkey;$/;"	m	struct:cfg	file:	access:public
-cfg::idx	setting.c	/^        int idx;$/;"	m	struct:cfg	file:	access:public
 cfg::name	config.c	/^        char *name;$/;"	m	struct:cfg	file:	access:public
-cfg::value	config.c	/^        void *value;$/;"	m	struct:cfg	file:	access:public
-cfg::value	setting.c	/^        void *value;$/;"	m	struct:cfg	file:	access:public
+cfg::value	config.c	/^        char *value;$/;"	m	struct:cfg	file:	access:public
 cfg_check	config.c	/^static void cfg_check()$/;"	f	file:
 cfg_check	config.c	/^static void cfg_check();$/;"	p	file:
-cfg_check	setting.c	/^static void cfg_check()$/;"	f	file:
-cfg_check	setting.c	/^static void cfg_check();$/;"	p	file:
-cfg_filename	setting.c	/^static char *cfg_filename;$/;"	v	file:
+cfg_filename	config.c	/^static char *cfg_filename;$/;"	v	file:
 cfg_get	config.c	/^static char *cfg_get(enum cfg_keys cfg_key)$/;"	f	file:	signature:(enum cfg_keys cfg_key)
 cfg_get	config.c	/^static char *cfg_get(enum cfg_keys cfg_key);$/;"	p	file:	signature:(enum cfg_keys cfg_key)
-cfg_get	setting.c	/^static char *cfg_get(enum cfg_keys cfg_key)$/;"	f	file:	signature:(enum cfg_keys cfg_key)
-cfg_get	setting.c	/^static char *cfg_get(enum cfg_keys cfg_key);$/;"	p	file:	signature:(enum cfg_keys cfg_key)
 cfg_get_coverpath	config.c	/^char *cfg_get_coverpath()$/;"	f
 cfg_get_coverpath	config.h	/^char *cfg_get_coverpath();$/;"	p	signature:()
-cfg_get_coverpath	setting.c	/^char *cfg_get_coverpath()$/;"	f
-cfg_get_coverpath	setting.h	/^char *cfg_get_coverpath();$/;"	p	signature:()
+cfg_get_debug	config.c	/^int cfg_get_debug()$/;"	f
+cfg_get_debug	config.h	/^int cfg_get_debug();$/;"	p	signature:()
 cfg_get_logfile	config.c	/^char *cfg_get_logfile()$/;"	f
 cfg_get_logfile	config.h	/^char *cfg_get_logfile();$/;"	p	signature:()
-cfg_get_logfile	setting.c	/^char *cfg_get_logfile()$/;"	f
-cfg_get_logfile	setting.h	/^char *cfg_get_logfile();$/;"	p	signature:()
 cfg_get_musicpath	config.c	/^char *cfg_get_musicpath()$/;"	f
 cfg_get_musicpath	config.h	/^char *cfg_get_musicpath();$/;"	p	signature:()
-cfg_get_musicpath	setting.c	/^char *cfg_get_musicpath()$/;"	f
-cfg_get_musicpath	setting.h	/^char *cfg_get_musicpath();$/;"	p	signature:()
+cfg_get_pos	config.c	/^struct position const *cfg_get_pos(struct position *pos)$/;"	f	signature:(struct position *pos)
+cfg_get_pos	config.h	/^struct position const *cfg_get_pos(struct position *pos);$/;"	p	signature:(struct position *pos)
 cfg_get_pos_lock	config.c	/^unsigned int cfg_get_pos_lock()$/;"	f
 cfg_get_pos_lock	config.h	/^unsigned int cfg_get_pos_lock();$/;"	p	signature:()
-cfg_get_pos_lock	setting.c	/^unsigned int cfg_get_pos_lock()$/;"	f
-cfg_get_pos_lock	setting.h	/^unsigned int cfg_get_pos_lock();$/;"	p	signature:()
-cfg_get_pos_x	config.c	/^unsigned int cfg_get_pos_x()$/;"	f
-cfg_get_pos_x	config.h	/^unsigned int cfg_get_pos_x();$/;"	p	signature:()
-cfg_get_pos_x	setting.c	/^unsigned int cfg_get_pos_x()$/;"	f
-cfg_get_pos_x	setting.h	/^unsigned int cfg_get_pos_x();$/;"	p	signature:()
-cfg_get_pos_y	config.c	/^unsigned int cfg_get_pos_y()$/;"	f
-cfg_get_pos_y	config.h	/^unsigned int cfg_get_pos_y();$/;"	p	signature:()
-cfg_get_pos_y	setting.c	/^unsigned int cfg_get_pos_y()$/;"	f
-cfg_get_pos_y	setting.h	/^unsigned int cfg_get_pos_y();$/;"	p	signature:()
 cfg_get_rule	config.c	/^char *cfg_get_rule()$/;"	f
 cfg_get_rule	config.h	/^char *cfg_get_rule();$/;"	p	signature:()
-cfg_get_rule	setting.c	/^char *cfg_get_rule()$/;"	f
-cfg_get_rule	setting.h	/^char *cfg_get_rule();$/;"	p	signature:()
 cfg_get_skinname	config.c	/^char *cfg_get_skinname()$/;"	f
 cfg_get_skinname	config.h	/^char *cfg_get_skinname();$/;"	p	signature:()
-cfg_get_skinname	setting.c	/^char *cfg_get_skinname()$/;"	f
-cfg_get_skinname	setting.h	/^char *cfg_get_skinname();$/;"	p	signature:()
 cfg_get_skinpath	config.c	/^char *cfg_get_skinpath()$/;"	f
 cfg_get_skinpath	config.h	/^char *cfg_get_skinpath();$/;"	p	signature:()
-cfg_get_skinpath	setting.c	/^char *cfg_get_skinpath()$/;"	f
-cfg_get_skinpath	setting.h	/^char *cfg_get_skinpath();$/;"	p	signature:()
 cfg_init	config.c	/^static int cfg_init;$/;"	v	file:
-cfg_init	setting.c	/^static int cfg_init;$/;"	v	file:
 cfg_keys	config.h	/^enum cfg_keys$/;"	g
-cfg_keys	setting.h	/^enum cfg_keys$/;"	g
-cfg_load	config.c	/^void cfg_load(const char *cfg_filename)$/;"	f	signature:(const char *cfg_filename)
-cfg_load	config.h	/^void cfg_load();$/;"	p	signature:()
-cfg_load	setting.c	/^void cfg_load()$/;"	f
-cfg_load	setting.h	/^void cfg_load();$/;"	p	signature:()
+cfg_load	config.c	/^void cfg_load(const char * const filename)$/;"	f	signature:(const char * const filename)
+cfg_load	config.h	/^void cfg_load(const char * const filename);$/;"	p	signature:(const char * const filename)
+cfg_lock	config.c	/^static pthread_mutex_t cfg_lock = PTHREAD_MUTEX_INITIALIZER;$/;"	v	file:
 cfg_refresh	config.c	/^void cfg_refresh()$/;"	f
 cfg_refresh	config.h	/^void cfg_refresh();$/;"	p	signature:()
-cfg_refresh	setting.c	/^void cfg_refresh()$/;"	f
-cfg_refresh	setting.h	/^void cfg_refresh();$/;"	p	signature:()
-cfg_resolver	config.c	/^static FILE *cfg_resolver(const char *cfg_filename)$/;"	f	file:	signature:(const char *cfg_filename)
-cfg_resolver	config.c	/^static FILE *cfg_resolver(const char *cfg_filename);$/;"	p	file:	signature:(const char *cfg_filename)
-cfg_resolver	setting.c	/^static GKeyFile *cfg_resolver()$/;"	f	file:
-cfg_resolver	setting.c	/^static GKeyFile *cfg_resolver();$/;"	p	file:
+cfg_resolver	config.c	/^static FILE *cfg_resolver()$/;"	f	file:
+cfg_resolver	config.c	/^static FILE *cfg_resolver();$/;"	p	file:
 cfg_set	config.c	/^static void cfg_set(enum cfg_keys cfg_key, const char *value)$/;"	f	file:	signature:(enum cfg_keys cfg_key, const char *value)
 cfg_set	config.c	/^static void cfg_set(enum cfg_keys, const char *value);$/;"	p	file:	signature:(enum cfg_keys, const char *value)
-cfg_set	setting.c	/^static void cfg_set(enum cfg_keys cfg_key, const char *value)$/;"	f	file:	signature:(enum cfg_keys cfg_key, const char *value)
-cfg_set	setting.c	/^static void cfg_set(enum cfg_keys, const char *value);$/;"	p	file:	signature:(enum cfg_keys, const char *value)
-cfg_set_postion	config.c	/^void cfg_set_postion(const char *xy)$/;"	f	signature:(const char *xy)
-cfg_set_postion	config.h	/^void cfg_set_postion(const char *xy);$/;"	p	signature:(const char *xy)
-cfg_set_postion	setting.c	/^void cfg_set_postion(const char *xy)$/;"	f	signature:(const char *xy)
-cfg_set_postion	setting.h	/^void cfg_set_postion(const char *xy);$/;"	p	signature:(const char *xy)
+cfg_set_debug	config.c	/^void cfg_set_debug()$/;"	f
+cfg_set_debug	config.h	/^void cfg_set_debug();$/;"	p	signature:()
+cfg_set_postion	config.c	/^void cfg_set_postion(const struct position const *pos)$/;"	f	signature:(const struct position const *pos)
+cfg_set_postion	config.h	/^void cfg_set_postion(const struct position * const pos);$/;"	p	signature:(const struct position * const pos)
 cfg_set_postion_lock	config.c	/^void cfg_set_postion_lock()$/;"	f
 cfg_set_postion_lock	config.h	/^void cfg_set_postion_lock();$/;"	p	signature:()
-cfg_set_postion_lock	setting.c	/^void cfg_set_postion_lock()$/;"	f
-cfg_set_postion_lock	setting.h	/^void cfg_set_postion_lock();$/;"	p	signature:()
-cfg_set_skinname	config.c	/^void cfg_set_skinname(const char *skin_name)$/;"	f	signature:(const char *skin_name)
-cfg_set_skinname	config.h	/^void cfg_set_skinname(const char *skin_name);$/;"	p	signature:(const char *skin_name)
-cfg_set_skinname	setting.c	/^void cfg_set_skinname(const char *skin_name)$/;"	f	signature:(const char *skin_name)
-cfg_set_skinname	setting.h	/^void cfg_set_skinname(const char *skin_name);$/;"	p	signature:(const char *skin_name)
-cfggrp	setting.c	/^        char *cfggrp;$/;"	m	struct:cfg	file:	access:public
+cfg_set_skinname	config.c	/^void cfg_set_skinname(const char * const skin_name)$/;"	f	signature:(const char * const skin_name)
+cfg_set_skinname	config.h	/^void cfg_set_skinname(const char * const skin_name);$/;"	p	signature:(const char * const skin_name)
 cfgkey	config.c	/^        enum cfg_keys cfgkey;$/;"	m	struct:cfg	typeref:enum:cfg::cfg_keys	file:	access:public
-cfgkey	setting.c	/^        char *cfgkey;$/;"	m	struct:cfg	file:	access:public
 cfgs	config.c	/^static struct cfg cfgs[] = $/;"	v	typeref:struct:cfg	file:
-cfgs	setting.c	/^static struct cfg cfgs[] = $/;"	v	typeref:struct:cfg	file:
 clean_name	utils.c	/^char *clean_name(char *name)$/;"	f	signature:(char *name)
 clean_name	utils.h	/^char *clean_name(char *name);$/;"	p	signature:(char *name)
 clean_reg	utils.c	/^char *clean_reg(char *str)$/;"	f	signature:(char *str)
@@ -257,8 +176,7 @@ cookie	http.h	/^    char *cookie;$/;"	m	struct:http_res	access:public
 coverfetch	coverfetch.h	/^typedef char *(*coverfetch)(char *, const char *);$/;"	t
 current_skin	ui/ui_skin.c	/^static struct ui_skin *current_skin;$/;"	v	typeref:struct:ui_skin	file:
 cxt_types	http.h	/^struct file_type cxt_types[] =$/;"	v	typeref:struct:file_type
-data	list.h	/^    void *data;$/;"	m	struct:Dlist_entity	access:public
-des	list.h	/^    value_free des;$/;"	m	struct:Dlist_entity	access:public
+debug	config.c	/^static int debug;$/;"	v	file:
 die	log.c	/^void die(const char *format, ...)$/;"	f	signature:(const char *format, ...)
 die	log.h	/^void die(const char *format, ...);$/;"	p	signature:(const char *format, ...)
 dir_search	utils.c	/^char **dir_search(const char *path, const char *pattern, int depth, int max_matched)$/;"	f	signature:(const char *path, const char *pattern, int depth, int max_matched)
@@ -286,7 +204,6 @@ e_player_status	ui/ui_player_control.c	/^static int e_player_status(GtkWidget *w
 e_window_drag	ui/ui_menu.c	/^static int e_window_drag(GtkWidget *widget, GdkEventButton *event, void *data)$/;"	f	file:	signature:(GtkWidget *widget, GdkEventButton *event, void *data)
 e_window_drag	ui/ui_menu.c	/^static int e_window_drag(GtkWidget *widget, GdkEventButton *event, void *data);$/;"	p	file:	signature:(GtkWidget *widget, GdkEventButton *event, void *data)
 enable	ui/ui.h	/^	int enable;$/;"	m	struct:ui_skin_label	access:public
-entity	list.h	/^    Dlist_entity *entity;$/;"	m	struct:Dlist	access:public
 ext	http.h	/^    char *ext;$/;"	m	struct:file_type	access:public
 file_type	http.h	/^struct file_type$/;"	s
 file_type::ext	http.h	/^    char *ext;$/;"	m	struct:file_type	access:public
@@ -367,7 +284,6 @@ http_url_check	http_compile.c	/^static int http_url_check(char const *url)$/;"	f
 http_url_check	http_compile.c	/^static int http_url_check(char const *url);$/;"	p	file:	signature:(char const *url)
 id	player.h	/^	unsigned int id;$/;"	m	struct:player_music_info	access:public
 idx	http.h	/^    enum http_cxt_types idx;$/;"	m	struct:file_type	typeref:enum:file_type::http_cxt_types	access:public
-idx	setting.c	/^        int idx;$/;"	m	struct:cfg	file:	access:public
 if_null_return	log.h	81;"	d
 if_null_return_null	log.h	87;"	d
 img_case	ui/ui.h	/^	struct ui_skin_image *img_case;$/;"	m	struct:ui_skin	typeref:struct:ui_skin::ui_skin_image	access:public
@@ -375,13 +291,11 @@ img_next	ui/ui.h	/^	struct ui_skin_image *img_next;$/;"	m	struct:ui_skin	typeref
 img_pause	ui/ui.h	/^	struct ui_skin_image *img_pause;$/;"	m	struct:ui_skin	typeref:struct:ui_skin::ui_skin_image	access:public
 img_play	ui/ui.h	/^	struct ui_skin_image *img_play;$/;"	m	struct:ui_skin	typeref:struct:ui_skin::ui_skin_image	access:public
 img_prev	ui/ui.h	/^	struct ui_skin_image *img_prev;$/;"	m	struct:ui_skin	typeref:struct:ui_skin::ui_skin_image	access:public
-key	list.h	/^    char *key;$/;"	m	struct:Dlist	access:public
 lab_album	ui/ui_player_info.c	/^static GtkWidget *lab_album;$/;"	v	file:
 lab_artist	ui/ui_player_info.c	/^static GtkWidget *lab_artist;$/;"	v	file:
 lab_title	ui/ui_player_info.c	/^static GtkWidget *lab_title;$/;"	v	file:
 length	http.h	/^    unsigned long length;$/;"	m	struct:http_res	access:public
 main	main.c	/^int main(int argc, const char **argv)$/;"	f	signature:(int argc, const char **argv)
-main_win	ui/ui_main.c	/^static GtkWidget *main_win;$/;"	v	file:
 max_char	ui/ui.h	/^	int max_char;$/;"	m	struct:ui_skin_label	access:public
 minor	http.h	/^    unsigned int minor;$/;"	m	struct:http_res	access:public
 mpd_currentstaus	mpd.h	/^int mpd_currentstaus(struct mpd_status **status, struct mpd_entity **entity);$/;"	p	signature:(struct mpd_status **status, struct mpd_entity **entity)
@@ -401,14 +315,12 @@ msg_prefix	log.c	/^char *msg_prefix[] =$/;"	v
 msg_types	log.h	/^enum msg_types$/;"	g
 name	config.c	/^        char *name;$/;"	m	struct:cfg	file:	access:public
 name	ui/ui.h	/^	char *name;$/;"	m	struct:ui_skin	access:public
-next	list.h	/^    struct Dlist *next;$/;"	m	struct:Dlist	typeref:struct:Dlist::Dlist	access:public
 nocover	ui/ui.h	/^	char *nocover;$/;"	m	struct:ui_skin_albumcover	access:public
 old_info	ui/ui_main.c	/^static struct player_music_info *old_info;$/;"	v	typeref:struct:player_music_info	file:
 path_real	utils.c	/^char *path_real(const char *path, char *filename)$/;"	f	signature:(const char *path, char *filename)
 path_real	utils.h	/^char *path_real(const char *path, char *filename);$/;"	p	signature:(const char *path, char *filename)
 path_wildcard	utils.c	/^char *path_wildcard(const char *str)$/;"	f	signature:(const char *str)
 path_wildcard	utils.h	/^char *path_wildcard(const char *str);$/;"	p	signature:(const char *str)
-player_get_current_song	player.h	/^struct player_music_info *player_get_current_song();$/;"	p	signature:()
 player_get_music_info	mpd.c	/^struct player_music_info *player_get_music_info()$/;"	f
 player_get_music_info	player.h	/^struct player_music_info *player_get_music_info();$/;"	p	signature:()
 player_get_status	mpd.c	/^enum player_status player_get_status()$/;"	f
@@ -430,17 +342,25 @@ player_toggle	mpd.c	/^int player_toggle()$/;"	f
 player_toggle	player.h	/^int player_toggle();$/;"	p	signature:()
 poll_mutex	ui/ui_main.c	/^static pthread_mutex_t poll_mutex = PTHREAD_MUTEX_INITIALIZER;$/;"	v	file:
 port	http.h	/^    uint16_t port;$/;"	m	struct:http_addr	access:public
-prev	list.h	/^    struct Dlist *prev;$/;"	m	struct:Dlist	typeref:struct:Dlist::Dlist	access:public
+position	config.h	/^struct position $/;"	s
+position::x	config.h	/^	int x;$/;"	m	struct:position	access:public
+position::y	config.h	/^	int y;$/;"	m	struct:position	access:public
 prmsg	log.c	/^void prmsg(enum msg_types msg_type, const char *format, ...)$/;"	f	signature:(enum msg_types msg_type, const char *format, ...)
 prmsg	log.h	/^void prmsg(enum msg_types msg_type, const char *format, ...);$/;"	p	signature:(enum msg_types msg_type, const char *format, ...)
 req_hdr	http.h	/^char *req_hdr[] = $/;"	v
 req_hdr_ext	http.h	/^char *req_hdr_ext[] =$/;"	v
 s_menu_lock	ui/ui_menu.c	/^static void s_menu_lock(GtkWidget *widget, GdkEventButton *event)$/;"	f	file:	signature:(GtkWidget *widget, GdkEventButton *event)
 s_menu_lock	ui/ui_menu.c	/^static void s_menu_lock(GtkWidget *widget, GdkEventButton *event);$/;"	p	file:	signature:(GtkWidget *widget, GdkEventButton *event)
+s_menu_next	ui/ui_menu.c	/^static void s_menu_next(GtkWidget *widget, GdkEventButton *event)$/;"	f	file:	signature:(GtkWidget *widget, GdkEventButton *event)
+s_menu_next	ui/ui_menu.c	/^static void s_menu_next(GtkWidget *widget, GdkEventButton *event);$/;"	p	file:	signature:(GtkWidget *widget, GdkEventButton *event)
+s_menu_prev	ui/ui_menu.c	/^static void s_menu_prev(GtkWidget *widget, GdkEventButton *event)$/;"	f	file:	signature:(GtkWidget *widget, GdkEventButton *event)
+s_menu_prev	ui/ui_menu.c	/^static void s_menu_prev(GtkWidget *widget, GdkEventButton *event);$/;"	p	file:	signature:(GtkWidget *widget, GdkEventButton *event)
 s_menu_quit	ui/ui_menu.c	/^static void s_menu_quit(GtkWidget *widget, GdkEventButton *event)$/;"	f	file:	signature:(GtkWidget *widget, GdkEventButton *event)
 s_menu_quit	ui/ui_menu.c	/^static void s_menu_quit(GtkWidget *widget, GdkEventButton *event);$/;"	p	file:	signature:(GtkWidget *widget, GdkEventButton *event)
 s_menu_skin	ui/ui_menu.c	/^static void s_menu_skin(GtkWidget *widget, GdkEventButton *event)$/;"	f	file:	signature:(GtkWidget *widget, GdkEventButton *event)
 s_menu_skin	ui/ui_menu.c	/^static void s_menu_skin(GtkWidget *widget, GdkEventButton *event);$/;"	p	file:	signature:(GtkWidget *widget, GdkEventButton *event)
+sig_exit	main.c	/^static void sig_exit(int signo)$/;"	f	file:	signature:(int signo)
+sig_exit	main.c	/^static void sig_exit(int signo);$/;"	p	file:	signature:(int signo)
 skin_conf	ui/ui.h	/^	char *skin_conf;$/;"	m	struct:ui_skin_entity	access:public
 skin_menu_items	ui/ui_menu.c	/^static GtkWidget **skin_menu_items;$/;"	v	file:
 skin_name	ui/ui.h	/^	char *skin_name;$/;"	m	struct:ui_skin_entity	access:public
@@ -452,6 +372,8 @@ strstr_ln	utils.c	/^char *strstr_ln(char *src, char *buf, size_t size, const cha
 strstr_ln	utils.h	/^char *strstr_ln(char *src, char *buf, size_t size, const char *token);$/;"	p	signature:(char *src, char *buf, size_t size, const char *token)
 tail	http.h	/^    char *tail;$/;"	m	struct:http_res	access:public
 tail_len	http.h	/^    unsigned long tail_len;$/;"	m	struct:http_res	access:public
+test_config	main.c	/^static void test_config(const char *filename)$/;"	f	file:	signature:(const char *filename)
+test_config	main.c	/^static void test_config(const char *filename);$/;"	p	file:	signature:(const char *filename)
 time_flag	utils.h	/^enum time_flag$/;"	g
 timeout_end	utils.h	78;"	d
 timeout_start	utils.h	39;"	d
@@ -548,6 +470,8 @@ ui_skin_read_integer	ui/ui_skin.c	/^static int ui_skin_read_integer(xmlNode *roo
 ui_skin_read_integer	ui/ui_skin.c	/^static int ui_skin_read_integer(xmlNode *root, char *node_name, char *attr_name, int *i);$/;"	p	file:	signature:(xmlNode *root, char *node_name, char *attr_name, int *i)
 ui_skin_read_string	ui/ui_skin.c	/^static char *ui_skin_read_string(xmlNode *root, char *node_name, char *attr_name, char **s)$/;"	f	file:	signature:(xmlNode *root, char *node_name, char *attr_name, char **s)
 ui_skin_read_string	ui/ui_skin.c	/^static char *ui_skin_read_string(xmlNode *root, char *node_name, char *attr_name, char **s);$/;"	p	file:	signature:(xmlNode *root, char *node_name, char *attr_name, char **s)
+ui_tray_init	ui/ui.h	/^void ui_tray_init();$/;"	p	signature:()
+ui_tray_init	ui/ui_menu.c	/^void ui_tray_init()$/;"	f
 ui_update	ui/ui.h	/^void ui_update(const char *skin_name);$/;"	p	signature:(const char *skin_name)
 ui_update	ui/ui_main.c	/^void ui_update(const char *skin_name)$/;"	f	signature:(const char *skin_name)
 uri	http.h	/^    char *uri;$/;"	m	struct:http_addr	access:public
@@ -557,14 +481,19 @@ url_decode	utils.c	/^char *url_decode(const char *str)$/;"	f	signature:(const ch
 url_decode	utils.h	/^char *url_decode(const char *str);$/;"	p	signature:(const char *str)
 url_encode	utils.c	/^char *url_encode(const char *str)$/;"	f	signature:(const char *str)
 url_encode	utils.h	/^char *url_encode(const char *str);$/;"	p	signature:(const char *str)
-value	config.c	/^        void *value;$/;"	m	struct:cfg	file:	access:public
-value	setting.c	/^        void *value;$/;"	m	struct:cfg	file:	access:public
-value_free	list.h	/^typedef void (*value_free)(void *);$/;"	t
+usage	main.c	/^static void usage()$/;"	f	file:
+usage	main.c	/^static void usage();$/;"	p	file:
+value	config.c	/^        char *value;$/;"	m	struct:cfg	file:	access:public
+version	main.c	/^static void version()$/;"	f	file:
+version	main.c	/^static void version();$/;"	p	file:
 width	ui/ui.h	/^	int width;$/;"	m	struct:ui_skin	access:public
 width	ui/ui.h	/^	int width;$/;"	m	struct:ui_skin_albumcover	access:public
+window	ui/ui_main.c	/^static GtkWidget *window;$/;"	v	file:
+x	config.h	/^	int x;$/;"	m	struct:position	access:public
 x	ui/ui.h	/^	int x;$/;"	m	struct:ui_skin_albumcover	access:public
 x	ui/ui.h	/^	int x;$/;"	m	struct:ui_skin_image	access:public
 x	ui/ui.h	/^	int x;$/;"	m	struct:ui_skin_label	access:public
+y	config.h	/^	int y;$/;"	m	struct:position	access:public
 y	ui/ui.h	/^	int y;$/;"	m	struct:ui_skin_albumcover	access:public
 y	ui/ui.h	/^	int y;$/;"	m	struct:ui_skin_image	access:public
 y	ui/ui.h	/^	int y;$/;"	m	struct:ui_skin_label	access:public

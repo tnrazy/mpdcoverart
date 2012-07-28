@@ -36,7 +36,7 @@ enum player_status player_get_status();
 /* 
  * return a static variable
  * */
-struct player_music_info *player_get_current_song();
+//const struct player_music_info *player_get_current_song();
 
 struct player_music_info *player_get_music_info();
 

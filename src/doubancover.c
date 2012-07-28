@@ -174,6 +174,12 @@ static char *do_match(int fd, const char *pattern)
 		offset -= walk - start;
 	}
 
+	/* download cover from server img1 */
+	if(matched && BEGIN_WITH(matched, "img3"))
+	{
+		*(matched + 3) = '1';
+	}
+
 	regfree(&reg);
 	munmap(start, lseek(fd, 0, SEEK_CUR));
 

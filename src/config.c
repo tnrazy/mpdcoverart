@@ -71,7 +71,7 @@ void cfg_refresh()
 	cfg_load(cfg_filename);
 }
 
-void cfg_load(char *filename)
+void cfg_load(const char * const filename)
 {
 	INIT_CHK();
 
@@ -80,13 +80,14 @@ void cfg_load(char *filename)
 	if(filename != NULL)
 	{
 		_DEBUG("%s", filename);
+
 		if(access(filename, F_OK | R_OK) == -1)
 		{
 			die("Config file '%s' not exists or can not be read", filename);
 		}
 
 		/* save config file name */
-		cfg_filename = filename;
+		cfg_filename = (char *)filename;
 
 		cfgfile = fopen(filename, "r");
 	}
@@ -201,27 +202,23 @@ char *cfg_get_skinname()
 	return cfg_get(CFG_SKINNAME);
 }
 
-unsigned int cfg_get_pos_x()
+struct position const *cfg_get_pos(struct position *pos)
 {
 	char *value = cfg_get(CFG_POSITION);
-	int x = atoi(value);
+
+	pos->x = atoi(value);
+	pos->y = atoi(strchr(value, ',') + 1);
 
 	free(value);
-	return x;
+
+	return pos;
 }
 
-unsigned int cfg_get_pos_y()
+void cfg_set_postion(const struct position const *pos)
 {
-	char *value = cfg_get(CFG_POSITION);
-	int y = atoi(strchr(value, ',') + 1);
-
-	free(value);
-	return y;
-}
-
-void cfg_set_postion(const char *xy)
-{
-	cfg_set(CFG_POSITION, xy);
+	char str[32];
+	snprintf(str, sizeof str, "%d,%d", pos->x, pos->y);
+	cfg_set(CFG_POSITION, str);
 }
 
 void cfg_set_postion_lock()
@@ -232,7 +229,7 @@ void cfg_set_postion_lock()
 	cfg_set(CFG_POSITION_LOCK, format);
 }
 
-void cfg_set_skinname(const char *skin_name)
+void cfg_set_skinname(const char * const skin_name)
 {
 	cfg_set(CFG_SKINNAME, skin_name);
 }

@@ -32,7 +32,13 @@ enum cfg_keys
     	CFG_UNKNOW
 };
 
-void cfg_load(char *filename);
+struct position 
+{
+	int x;
+	int y;
+};
+
+void cfg_load(const char * const filename);
 
 void cfg_refresh();
 
@@ -48,13 +54,11 @@ char *cfg_get_skinname();
 
 char *cfg_get_rule();
 
-unsigned int cfg_get_pos_x();
-
-unsigned int cfg_get_pos_y();
+struct position const *cfg_get_pos(struct position *pos);
 
 unsigned int cfg_get_pos_lock();
 
-void cfg_set_postion(const char *xy);
+void cfg_set_postion(const struct position * const pos);
 
 void cfg_set_postion_lock();
 
@@ -63,6 +67,6 @@ int cfg_get_debug();
 void cfg_set_debug();
 
 /* change skin */
-void cfg_set_skinname(const char *skin_name);
+void cfg_set_skinname(const char * const skin_name);
 
 #endif

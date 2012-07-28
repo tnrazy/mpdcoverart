@@ -16,25 +16,25 @@
 #include <pthread.h>
 #include <gtk/gtk.h>
 
-static int ui_poll(GtkWidget *widget);
-
-static GtkWidget *main_win;
+static GtkWidget *window;
 
 static struct player_music_info *old_info;
 
 static pthread_mutex_t poll_mutex = PTHREAD_MUTEX_INITIALIZER;
 
+static int ui_poll(GtkWidget *widget);
+
 void ui_load()
 {
-	GtkWidget *window;
-	GtkWidget *fixed;
+	GtkWidget *main_container;
 	GtkWidget *cover_container;
 
-	struct ui_skin *a_skin;
+	struct ui_skin *skin;
+	struct position pos;
 
 	gtk_init(NULL, NULL);
 
-	a_skin = ui_get_current_skin();
+	skin = ui_get_current_skin();
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
@@ -43,34 +43,37 @@ void ui_load()
 	/* remove the window decorate */
 	gtk_window_set_decorated(GTK_WINDOW(window), FALSE);
 
-	gtk_window_set_default_size(GTK_WINDOW(window), a_skin->width, a_skin->height);
+	gtk_window_set_default_size(GTK_WINDOW(window), skin->width, skin->height);
 
 	/* remove the taskbar */
 	gtk_window_set_skip_taskbar_hint(GTK_WINDOW(window), TRUE);
 
 	gtk_window_set_keep_below(GTK_WINDOW(window), TRUE);
 
-	gtk_widget_set_uposition(window, cfg_get_pos_x(), cfg_get_pos_y());
+	cfg_get_pos(&pos);
+	gtk_widget_set_uposition(window, pos.x, pos.y);
 
-	fixed = gtk_fixed_new();
+	main_container = gtk_fixed_new();
 
-	gtk_container_add(GTK_CONTAINER(window), fixed);
+	gtk_container_add(GTK_CONTAINER(window), main_container);
 
 	cover_container = gtk_event_box_new();
 
 	gtk_event_box_set_visible_window(GTK_EVENT_BOX(cover_container), FALSE);
 	
 	/* init cover skin */
-	ui_cover_init(fixed, cover_container);
+	ui_cover_init(main_container, cover_container);
 
 	/* init player control skin */
-	ui_player_control_init(fixed);
+	ui_player_control_init(main_container);
 
 	/* init label skin */
-	ui_player_info_init(fixed);
+	ui_player_info_init(main_container);
 
 	ui_menu_init(cover_container);
 
+	ui_tray_init();
+	
 	ui_set_transparent(window, NULL, NULL);
 
 	ui_update(NULL);
@@ -80,8 +83,6 @@ void ui_load()
 	ui_poll(NULL);
 
 	gtk_widget_show_all(window);
-
-	main_win = window;
 
 	gtk_main();
 }
@@ -97,7 +98,7 @@ void ui_update(const char *skin_name)
 	if(skin_name)
 	{
 		/* destroy current window */
-		gtk_widget_destroy(main_win);
+		gtk_widget_destroy(window);
 
 		/* exit gtk loop */
 		gtk_main_quit();

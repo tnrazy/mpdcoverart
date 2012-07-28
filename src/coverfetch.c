@@ -28,7 +28,7 @@ static char *getcover_network_v(coverfetch fetch, char *path, const char *format
 
 char *getcover(const char *uri, const char *artist, const char *title, const char *album, coverfetch fetch)
 {
-    	char *cover = NULL, *cover_path, *music_path, *cmd, newname[1024];
+    	char *cover = NULL, *cover_path, *music_path, *cmd, newname[FILENAME_MAX];
 
 	/* get cover from local */
 	if(cover = getcover_local(uri, artist, title), cover)
