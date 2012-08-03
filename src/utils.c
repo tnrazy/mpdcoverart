@@ -489,7 +489,7 @@ char *trim(char *str)
 	/* -1 '\0' */
 	char *right = left + strlen(left) - 1;
 
-	while(isspace(*right))
+	while(isspace(*right) && right > left)
 	{
 		*right-- = '\0';
 	}
