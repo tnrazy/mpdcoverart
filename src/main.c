@@ -17,6 +17,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include <getopt.h>
+#include <sys/stat.h>
 
 #define VERSION 					"0.1"
 
@@ -27,6 +28,8 @@ static void version();
 static void test_config(const char *filename);
 
 static void sig_exit(int signo);
+
+static void daemonize(char *file_err, char *file_log);
 
 int main(int argc, const char **argv)
 {
@@ -85,50 +88,22 @@ int main(int argc, const char **argv)
 	_DEBUG("config file name: %s", cfg_fileanme);
 	cfg_load(cfg_fileanme);
 
+	char *log_file, *skin_name;
+
+	log_file = cfg_get_logfile();
+
 	if(!cfg_get_debug())
 	{
 		printf("Run mpdcoverart in daemon ...\n");
-
-		if(signal(SIGHUP, SIG_IGN) == SIG_ERR)
-		{
-			die("Failed to regist signal: %s", strerror(errno));
-		}
-
-		switch(fork())
-		{
-			case -1:
-				die("fork() error: %s", strerror(errno));
-				break;
-
-			case 0:
-				break;
-
-			default:
-				exit(EXIT_SUCCESS);
-		}
-
-		/* detach console */
-		if(setsid() < 0)
-		{
-			die("Failed to detach console");
-		}
-
-		if(chdir("/") < 0)
-		{
-			die("Failed to change working directory: %s", strerror(errno));
-		}
-
-		/* close stdin */
-		close(STDIN_FILENO);
-
-		stderr = freopen("/dev/null", "rw", stderr);
-		stdout = freopen("/dev/null", "rw", stdout);
+		
+		daemonize(log_file, NULL);
 	}
 
-	char *skin_name = cfg_get_skinname();
+	skin_name = cfg_get_skinname();
 
 	ui_skin_load(skin_name);
 
+	free(log_file);
 	free(skin_name);
 
 	ui_load();
@@ -179,4 +154,57 @@ static void sig_exit(int signo)
 {
 	fprintf(stderr, "%s\n", "\b\rCtrl + c, exit...");
 	exit(EXIT_SUCCESS);
+}
+
+static void daemonize(char *file_err, char *file_log)
+{
+	struct sigaction sa;
+
+	/* clean file creation mask */
+	umask(0);
+
+	sa.sa_handler = SIG_IGN;
+	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
+
+	/* ignore SIGHUP */
+	if(sigaction(SIGHUP, &sa, NULL) < 0)
+	{
+		die("can not ignore SIGHUP: %s", strerror(errno));
+	}
+
+	switch(fork())
+	{
+		case -1:
+			die("fork() error: %s", strerror(errno));
+
+		case 0:
+			break;
+
+		default:
+			/* exit parent process */
+			exit(EXIT_SUCCESS);
+	}
+
+	/* change current working directory to the root */
+	if(chdir("/") < 0)
+	{
+		die("failed to change current working directory to root: %s", strerror(errno));
+	}
+
+	close(STDIN_FILENO);
+
+	/* attach file descriptor STDOUT_FILENO to file_log, STDERR_FILENO to file_err */
+	stdout = freopen(file_log ? file_log : "/dev/null", "rw", stdout);
+	stderr = freopen(file_err ? file_err : "/dev/null", "rw", stderr);
+
+	if(NULL == stdout)
+	{
+		die("failed redirect STDOUT_FILENO to '%s'", file_log);
+	}
+
+	if(NULL == stderr)
+	{
+		die("failed redirect STDERR_FILENO to '%s'", file_err);
+	} 
 }

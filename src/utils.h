@@ -80,6 +80,18 @@ enum time_flag
     }                                                                                           \
 }
 
+#define if_null_return(value)                               if((value) == NULL)                                 \
+                                                            {                                                   \
+                                                                _ERROR(#value " is null, and return.");         \
+                                                                return;                                         \
+                                                            }
+
+#define if_null_return_null(value)                          if((value) == NULL)                                 \
+                                                            {                                                   \
+                                                                _ERROR(#value " is null. return null.");        \
+                                                                return 0;                                       \
+                                                            }
+
 /* 
  * in a string find a string, and ignore case, 
  * if the contain_need is 0 not return need else contain need string

@@ -9,6 +9,7 @@
 
 #include "http.h"
 #include "log.h"
+#include "utils.h"
 
 #include <stdio.h>
 #include <stdlib.h>

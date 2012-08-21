@@ -78,16 +78,5 @@ void die(const char *format, ...);
 #define _DEBUG(...)                                         /* do nothing */
 #endif
 
-#define if_null_return(value)                               if((value) == NULL)                                 \
-                                                            {                                                   \
-                                                                _ERROR(#value " is null, and return.");         \
-                                                                return;                                         \
-                                                            }
-
-#define if_null_return_null(value)                          if((value) == NULL)                                 \
-                                                            {                                                   \
-                                                                _ERROR(#value " is null. return null.");        \
-                                                                return 0;                                       \
-                                                            }
-
 #endif
+

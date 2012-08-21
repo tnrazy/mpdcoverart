@@ -84,32 +84,6 @@ void prmsg(enum msg_types msg_type, const char *format, ...)
 	  		"");
 
 	return;
-#ifdef MSG2_FILE
-    	/* ... */
-    	char *logfile;
-	FILE *f;
-
-	/* should run as daemon */
-	if(msg_type != MSG_ERROR || !daemon)
-	{
-		return;
-	}
-
-	logfile = cfg_get_logfile();
-
-	f = fopen(logfile, "a+");
-
-	if(!f && !logfile)
-	{
-		return;
-	}
-
-	fwrite(msg_buf, strlen(msg_buf), 1, f);
-	fputc('\n', f);
-
-	fclose(f);
-	free(logfile);
-#endif
 }
 
 void die(const char *format, ...)
