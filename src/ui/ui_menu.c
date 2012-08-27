@@ -31,6 +31,8 @@ static void s_menu_prev(GtkWidget *widget, GdkEventButton *event);
 
 static GtkWidget **skin_menu_items;
 
+static GtkWidget *tray_icon;
+
 void ui_menu_init(GtkWidget *container)
 {
 	GtkWidget *menu;
@@ -131,8 +133,12 @@ void ui_menu_init(GtkWidget *container)
 
 void ui_tray_init()
 {
+	if(tray_icon)
+	{
+		return;
+	}
+
 	GtkWidget *tray_menu;
-	GtkWidget *tray_icon;
 	GdkPixbuf *pixbuf;
 	GtkWidget *menu_separator;
 
