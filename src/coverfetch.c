@@ -19,6 +19,34 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <Imlib2.h>
+
+/*
+ * ID3V2 tag
+ * */
+struct id3_header
+{
+	char header[3];
+	char major_version;
+	char minor_version;
+	char flags;
+
+	/* tag size, not contain tag header(10 bits) */
+	char size[4];
+};
+
+/***
+
+struct id3_frame
+{
+	char id[4];
+	char size[4];
+	char flags[2];
+};
+
+***/
+
+static char *getcover_id3v2(const char *uri);
 
 static char *getcover_local(const char *uri, const char *artist, const char *title);
 
@@ -29,6 +57,12 @@ static char *getcover_network_v(coverfetch fetch, char *path, const char *format
 char *getcover(const char *uri, const char *artist, const char *title, const char *album, coverfetch fetch)
 {
     	char *cover = NULL, *cover_path, *music_path, *cmd, newname[FILENAME_MAX];
+
+	if(cover = getcover_id3v2(uri), cover)
+	{
+		_INFO("ID3V2 cover: %s", cover);
+		return cover;
+	}
 
 	/* get cover from local */
 	if(cover = getcover_local(uri, artist, title), cover)
@@ -47,7 +81,7 @@ char *getcover(const char *uri, const char *artist, const char *title, const cha
 			snprintf(newname, sizeof newname, "%s%s - %s%s", cover_path, artist, title, strrchr(cover, '.'));
 		else
 		{
-			/* cfg_get_coverpath always return path end with '/' */
+			/* cfg_get_coverpath return path end with '/' */
 			music_path = cfg_get_musicpath();
 
 			/* move the cover to the music path, name eg: /media/music/xxx/folder.jpg */
@@ -251,5 +285,147 @@ static char *getcover_local(const char *uri, const char *artist, const char *tit
 	}
 
 	free(music_path);
+	return NULL;
+}
+
+/***
+
+static unsigned long id3_realsize(const char *size)
+{
+	return size[0] << 21 | size[1] << 14 | size[2] << 7 | size[3];
+}
+
+***/
+
+static char *getcover_id3v2(const char *uri)
+{
+	char *music_path, *cover_path, abspath[FILENAME_MAX], cover[FILENAME_MAX];
+	FILE *fp = NULL;
+	struct id3_header header;
+
+	music_path = cfg_get_musicpath();
+	cover_path = cfg_get_coverpath();
+
+	snprintf(abspath, FILENAME_MAX, "%s%s", music_path, uri);
+	snprintf(cover, FILENAME_MAX, "%s.id3v2/%s.cover", cover_path, strrchr(uri, '/') + 1);
+
+	_INFO("try to get ID3V2 cover art from '%s'", abspath);
+
+	if(access(cover, F_OK) == 0)
+	{
+		return strdup(cover);
+	}
+
+	fp = fopen(abspath, "rb");
+
+	if(fp == NULL)
+	{
+		_ERROR("failed to open file '%s': %s", abspath, strerror(errno));
+
+		goto out;
+	}
+
+	if(fread(&header, sizeof header, 1, fp) != 1)
+	{
+		_ERROR("failed to read ID3V2 header from '%s': %s", abspath, strerror(errno));
+
+		goto out;
+	}
+
+	if(memcmp(header.header, "ID3", 3) != 0)
+	{
+		_WARN("failed to read ID3V2 header from '%s', header '%s'", abspath, header.header);
+
+		goto out;
+	}
+
+	Imlib_Image image;
+	
+	if(image = imlib_load_image(abspath), image == NULL)
+	{
+		_WARN("failed to loaded image from '%s'", abspath);
+
+		goto out;
+	}
+
+	imlib_context_set_image(image);
+	imlib_save_image(cover);
+	imlib_free_image();
+
+	fclose(fp);
+	free(music_path);
+	free(cover_path);
+
+	return strdup(cover);
+
+	/***
+	 
+	void *data = NULL, *ptr = data;
+	unsigned long data_size;
+
+	data_size = id3_realsize(header.size);
+	data = calloc(1, data_size);
+
+	fseek(fp, sizeof header, SEEK_SET);
+	
+	if(fread(data, data_size, 1, fp) != 1)
+	{
+		_ERROR("failed to frame data: %s", strerror(errno));
+
+		free(data);
+		goto out;
+	}
+
+	while(1)
+	{
+		const struct id3_frame *frame = (const struct id3_frame *)data;
+		unsigned long frame_size = id3_realsize(frame->size);
+
+		if(*frame->id == '\0')
+		{
+			break;
+		}
+
+		if(frame_size >= data_size)
+		{
+			_ERROR("frame overflow");
+
+			break;
+		}
+
+		if(memcmp((char *)frame->id, "APIC", 4) != 0)
+		{
+			data += 10 + frame_size;
+			continue;
+		}
+
+		FILE *coverart = fopen(cover, "wb+");
+
+		if(fwrite(data + 24, frame_size - 14, 1, coverart) != 1)
+		{
+			fclose(coverart);
+
+			_ERROR("failed to write cover art: %s", strerror(errno));
+
+			break;
+		}
+
+		fclose(coverart);
+
+		free(ptr);
+		fclose(fp);
+		free(music_path);
+		free(cover_path);
+
+		return strdup(cover);
+	}
+	free(ptr);
+
+	***/
+out:
+	fclose(fp);
+	free(music_path);
+	free(cover_path);
+
 	return NULL;
 }

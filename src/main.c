@@ -16,6 +16,7 @@
 #include <errno.h>
 #include <unistd.h>
 #include <signal.h>
+#include <fcntl.h>
 #include <getopt.h>
 #include <sys/stat.h>
 
@@ -195,8 +196,8 @@ static void daemonize(char *file_err, char *file_log)
 	close(STDIN_FILENO);
 
 	/* attach file descriptor STDOUT_FILENO to file_log, STDERR_FILENO to file_err */
-	stdout = freopen(file_log ? file_log : "/dev/null", "rw", stdout);
-	stderr = freopen(file_err ? file_err : "/dev/null", "rw", stderr);
+	stdout = freopen(file_log ? file_log : "/dev/null", "a+", stdout);
+	stderr = freopen(file_err ? file_err : "/dev/null", "a+", stderr);
 
 	if(NULL == stdout)
 	{
@@ -207,4 +208,8 @@ static void daemonize(char *file_err, char *file_log)
 	{
 		die("failed redirect STDERR_FILENO to '%s'", file_err);
 	} 
+
+	setvbuf(stdout, NULL, _IONBF, 0);
+	setvbuf(stderr, NULL, _IONBF, 0);
 }
+

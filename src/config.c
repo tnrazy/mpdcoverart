@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/stat.h>
 #include <pthread.h>
 
 struct cfg
@@ -357,20 +358,11 @@ static FILE *cfg_resolver()
 static void cfg_check()
 {
 	char *logfile = cfg_get_logfile();
+	char id3v2_dir[FILENAME_MAX];
 
 	if(logfile == NULL)
 	{
 		die("Log file is null.");
-	}
-
-	if(access(logfile, F_OK) == -1)
-	{
-		die("Log file '%s' not exists.", logfile);
-	}
-
-	if(access(logfile, W_OK) == -1)
-	{
-		die("Log file '%s' can not be write.");
 	}
 
 	free(logfile);
@@ -390,6 +382,12 @@ static void cfg_check()
 	if(access(coverpath, X_OK | W_OK) == -1)
 	{
 		die("Cover path '%s' can not be write.", coverpath);
+	}
+
+	snprintf(id3v2_dir, FILENAME_MAX, "%s.id3v2", coverpath);
+	if(access(id3v2_dir, F_OK) == -1)
+	{
+		mkdir(id3v2_dir, 0766);
 	}
 
 	free(coverpath);

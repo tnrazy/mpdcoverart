@@ -9,6 +9,7 @@ CC 		:= gcc
 CFLAGS 		:= -Wall -Werror -std=gnu99 -Isrc
 CFLAGS 		+= -I /usr/include/libxml2/
 CFLAGS 		+= $(shell pkg-config --cflags --libs gtk+-2.0)
+CFLAGS 		+= $(shell imlib2-config --cflags --libs)
 
 LDLIBS 		+= -L /usr/lib -lmpdclient
 LDLIBS 		+= -L /usr/lib -lxml2

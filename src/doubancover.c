@@ -7,7 +7,7 @@
  * tn.razy@gmail.com
  */
 
-//#define ___DEBUG
+#define ___DEBUG
 
 #include "http.h"
 #include "log.h"

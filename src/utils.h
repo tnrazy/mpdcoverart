@@ -32,8 +32,9 @@ enum time_flag
     TIMEOUT_UNKNOW
 };
 
-#define HAS_FLAG(flags, f)                          ((flags) & (f)) > 0
-#define BEGIN_WITH(str, s)                          ( strncmp((str), (s), strlen(s)) == 0 )
+#define HAS_FLAG(flags, f)                          	((flags) & (f)) > 0
+#define BEGIN_WITH(str, s)                          	( strncmp((str), (s), strlen((s))) == 0 )
+#define END_WITH(str, s) 			  	( strncmp((str) + strlen((str)) - strlen((s)), (s), strlen((s))) == 0 )
 
 /* time unit is a second, if connfd can be read or write return, if status is 0 is ok else errno */
 #define timeout_start(connfd, timeout, flag, status)                                            \
