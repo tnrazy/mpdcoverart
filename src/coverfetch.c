@@ -313,6 +313,9 @@ static char *getcover_id3v2(const char *uri)
 
 	if(access(cover, F_OK) == 0)
 	{
+		free(music_path);
+		free(cover_path);
+
 		return strdup(cover);
 	}
 
@@ -332,7 +335,7 @@ static char *getcover_id3v2(const char *uri)
 		goto out;
 	}
 
-	if(memcmp(header.header, "ID3", 3) != 0)
+	if(memcmp(header.header, "ID3", 3))
 	{
 		_WARN("failed to read ID3V2 header from '%s', header '%s'", abspath, header.header);
 
@@ -343,7 +346,7 @@ static char *getcover_id3v2(const char *uri)
 	
 	if(image = imlib_load_image(abspath), image == NULL)
 	{
-		_WARN("failed to loaded image from '%s'", abspath);
+		_WARN("failed to load image from '%s'", abspath);
 
 		goto out;
 	}
