@@ -187,6 +187,9 @@ static void daemonize(char *file_err, char *file_log)
 			exit(EXIT_SUCCESS);
 	}
 
+	/* detach console */
+	setsid();
+
 	/* change current working directory to the root */
 	if(chdir("/") < 0)
 	{
