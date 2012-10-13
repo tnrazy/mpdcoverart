@@ -18,7 +18,6 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/stat.h>
-#include <pthread.h>
 
 struct cfg
 {
@@ -38,7 +37,7 @@ static struct cfg cfgs[] =
 
 static FILE *cfg_resolver();
 
-static char *cfg_get(enum cfg_keys cfg_key);
+static const char *cfg_get(enum cfg_keys cfg_key);
 
 static void cfg_set(enum cfg_keys, const char *value);
 
@@ -49,7 +48,7 @@ static int cfg_init;
 #define INIT_CHK()                                                          if(cfg_init) return;
 #define INIT_OK()                                                           cfg_init = 1;
 
-static char *cfg_filename;
+static char cfg_filename[FILENAME_MAX] = { 0 };
 
 static int debug;
 
@@ -72,11 +71,11 @@ void cfg_refresh()
 	cfg_load(cfg_filename);
 }
 
-void cfg_load(const char * const filename)
+void cfg_load(const char *filename)
 {
 	INIT_CHK();
 
-	FILE *cfgfile;
+	FILE *cfgfile = NULL;
 
 	if(filename != NULL)
 	{
@@ -88,7 +87,7 @@ void cfg_load(const char * const filename)
 		}
 
 		/* save config file name */
-		cfg_filename = (char *)filename;
+		strncpy(cfg_filename, filename, FILENAME_MAX);
 
 		cfgfile = fopen(filename, "r");
 	}
@@ -101,7 +100,7 @@ void cfg_load(const char * const filename)
 	if(cfgfile == NULL)
 	{
 		/* fopen() error */
-		die("Failed to load config file '%s' ", cfg_filename);
+		die("Failed to load config file '%s'", filename);
 	}
 
 	/* init config value */
@@ -113,13 +112,13 @@ void cfg_load(const char * const filename)
 
 		line = trim(buf);
 
-		/* skip comment line */
+		/* skip comment */
 		if(BEGIN_WITH(line, "#"))
 		{
 			continue;
 		}
 
-		/* skip blank line */
+		/* skip blank */
 		if(strcmp(line, "") == 0)
 		{
 			continue;
@@ -157,65 +156,44 @@ void cfg_load(const char * const filename)
 	_INFO("Load config file '%s' is ok.", cfg_filename);
 }
 
-char *cfg_get_logfile()
+const char *cfg_get_logfile()
 {
-        char *value = cfg_get(CFG_LOGFILE), *ret;
-
-        ret = path_wildcard(value);
-
-        free(value);
-        return ret;
+        return cfg_get(CFG_LOGFILE);
 }
 
-char *cfg_get_coverpath()
+const char *cfg_get_coverpath()
 {
-	char *value = cfg_get(CFG_COVERPATH), *ret;
+	const char *value = cfg_get(CFG_COVERPATH);
 
-	ret = path_wildcard(value);
-
-	free(value);
-
-	return ret;
+	return value;
 }
 
-char *cfg_get_musicpath()
+const char *cfg_get_musicpath()
 {
-    	char *value = cfg_get(CFG_MUSICPATH), *ret;
-
-	ret = path_wildcard(value);
-
-	free(value);
-	return ret;
+    	return cfg_get(CFG_MUSICPATH);
 }
 
-char *cfg_get_skinpath()
+const char *cfg_get_skinpath()
 {
-	char *value = cfg_get(CFG_SKINPATH), *ret;
-
-	ret = path_wildcard(value);
-
-	free(value);
-	return ret;
+	return cfg_get(CFG_SKINPATH);
 }
 
-char *cfg_get_skinname()
+const char *cfg_get_skinname()
 {
 	return cfg_get(CFG_SKINNAME);
 }
 
 struct position const *cfg_get_pos(struct position *pos)
 {
-	char *value = cfg_get(CFG_POSITION);
+	const char *value = cfg_get(CFG_POSITION);
 
 	pos->x = atoi(value);
 	pos->y = atoi(strchr(value, ',') + 1);
 
-	free(value);
-
 	return pos;
 }
 
-void cfg_set_postion(const struct position const *pos)
+void cfg_set_postion(const struct position *pos)
 {
 	char str[32];
 	snprintf(str, sizeof str, "%d,%d", pos->x, pos->y);
@@ -230,26 +208,26 @@ void cfg_set_postion_lock()
 	cfg_set(CFG_POSITION_LOCK, format);
 }
 
-void cfg_set_skinname(const char * const skin_name)
+void cfg_set_skinname(const char *skin_name)
 {
 	cfg_set(CFG_SKINNAME, skin_name);
 }
 
 unsigned int cfg_get_pos_lock()
 {
-	char *value = cfg_get(CFG_POSITION_LOCK);
+	const char *value = cfg_get(CFG_POSITION_LOCK);
+
 	int lock = atoi(value);
 
-	free(value);
 	return lock;
 }
 
-char *cfg_get_rule()
+const char *cfg_get_rule()
 {
     	return cfg_get(CFG_RULE);
 }
 
-static char *cfg_get(enum cfg_keys cfg_key)
+static const char *cfg_get(enum cfg_keys cfg_key)
 {
     	cfg_load(cfg_filename);
 
@@ -262,18 +240,8 @@ static char *cfg_get(enum cfg_keys cfg_key)
 	return strdup(cfgs[cfg_key].value);
 }
 
-static pthread_mutex_t cfg_lock = PTHREAD_MUTEX_INITIALIZER;
-
 static void cfg_set(enum cfg_keys cfg_key, const char *value)
 {
-	if(cfg_key < 0 || cfg_key >= CFG_UNKNOW)
-	{
-		_ERROR("Unknow cfg_key: %s", cfg_key);
-		return;
-	}
-
-	pthread_mutex_lock(&cfg_lock);
-
 	FILE *cfgfile = fopen(cfg_filename, "w");
 
 	_DEBUG("Config file: %s, %d", cfg_filename, cfgfile == NULL);
@@ -314,50 +282,33 @@ static void cfg_set(enum cfg_keys cfg_key, const char *value)
 
 	fclose(cfgfile);
 
-	pthread_mutex_unlock(&cfg_lock);
-
 	cfg_refresh();
 }
 
 static FILE *cfg_resolver()
 {
-	FILE *cfgfile = NULL;
-
-	if(cfg_filename)
-	{
-		cfgfile = fopen(cfg_filename, "r");
-
-		return cfgfile;
-	}
-
-	cfg_filename = path_real(getenv("HOME"), CFGNAME);
+	snprintf(cfg_filename, FILENAME_MAX, "%s/%s", getenv("HOME"), CFGNAME);
 
 	_DEBUG("Try load default config file: %s", cfg_filename);
 
 	if(access(cfg_filename, F_OK | R_OK) == -1)
 	{
-		free(cfg_filename);
-
-		cfg_filename = path_real(getenv("XDG_CONFIG_HOME"), CFGHOMENAME);
+		snprintf(cfg_filename, FILENAME_MAX, "%s/%s", getenv("XDG_CONFIG_HOME"), CFGHOMENAME);
 
 		_DEBUG("Try load default config file: %s", cfg_filename);
 
 		if(access(cfg_filename, F_OK | R_OK) == -1)
 		{
-			free(cfg_filename);
 			die("Failed to load default config file 'HOME/%s', '~/.config/%s'", CFGNAME, CFGHOMENAME);
 		}
 	}
 
-	/* save config file name */
-	cfgfile = fopen(cfg_filename, "r");
-
-	return cfgfile;
+	return fopen(cfg_filename, "r");
 }
 
 static void cfg_check()
 {
-	char *logfile = cfg_get_logfile();
+	const char *logfile = cfg_get_logfile();
 	char id3v2_dir[FILENAME_MAX];
 
 	if(logfile == NULL)
@@ -365,9 +316,7 @@ static void cfg_check()
 		die("Log file is null.");
 	}
 
-	free(logfile);
-
-	char *coverpath = cfg_get_coverpath();
+	const char *coverpath = cfg_get_coverpath();
 
 	if(coverpath == NULL)
 	{
@@ -390,9 +339,7 @@ static void cfg_check()
 		mkdir(id3v2_dir, 0766);
 	}
 
-	free(coverpath);
-
-	char *musicpath = cfg_get_musicpath();
+	const char *musicpath = cfg_get_musicpath();
 
 	if(musicpath == NULL)
 	{
@@ -409,9 +356,7 @@ static void cfg_check()
 		die("Music path '%s' can't be search.");
 	}
 
-	free(musicpath);
-
-	char *skinpath = cfg_get_skinpath();
+	const char *skinpath = cfg_get_skinpath();
 
 	if(skinpath == NULL)
 	{
@@ -427,8 +372,6 @@ static void cfg_check()
 	{
 		die("Skin path '%s' can not be search.");
 	}
-
-	free(skinpath);
 
 	_INFO("Check config is ok");
 }

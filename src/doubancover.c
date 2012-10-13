@@ -36,7 +36,7 @@
  * request of HEAD to host will return 403
  * */
 #define COVERPATTERN                            "^img[0-9].douban.com/spic/s[0-9]+.jpg"
-#define TIMEOUT                                 10
+#define TIMEOUT                                 5
 
 static int do_search(char *key, char **tmpfile);
 

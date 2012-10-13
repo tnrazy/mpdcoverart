@@ -93,10 +93,6 @@ enum time_flag
                                                                 return 0;                                       \
                                                             }
 
-/* 
- * in a string find a string, and ignore case, 
- * if the contain_need is 0 not return need else contain need string
- * */
 char *strstr_igcase(const char *str, const char *need, int contain_need);
 
 /* 
@@ -104,15 +100,11 @@ char *strstr_igcase(const char *str, const char *need, int contain_need);
  * buf_len must be larger than line length
  * if arguments error or signal line return null, otherwise return the next line
  * */
-char *strstr_ln(char *src, char *buf, size_t size, const char *token);
+char *strstr_token(const char *src, const char *token, char *buf, size_t size);
 
 char *url_decode(const char *str);
 
 char *url_encode(const char *str);
-
-char *path_wildcard(const char *str);
-
-char *path_real(const char *path, char *filename);
 
 char *clean_reg(char *str);
 

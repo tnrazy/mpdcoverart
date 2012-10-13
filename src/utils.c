@@ -26,15 +26,10 @@ static char **dir_search_p(const char *path, const char *pattern, int depth, cha
 
 char *strstr_igcase(const char *str, const char *need, int contain_need)
 {
-    	if(str == NULL || need == NULL)
-	{
-		return NULL;
-	}
-
 	char *s = (char *)str, *n = (char *)need;
 	int i, matched = 0;
 
-	while(1)
+	while(str)
 	{
 		/* whether reach end */
 		if(*s == '\0' || *n == '\0')
@@ -70,18 +65,13 @@ char *strstr_igcase(const char *str, const char *need, int contain_need)
 	return (matched && *n == '\0') ? (contain_need ? s - (n - need) : s) : NULL;
 }
 
-char *strstr_ln(char *src, char *buf, size_t size, const char *token)
+char *strstr_token(const char *src, const char *token, char *buf, size_t size)
 {
-	if(src == NULL || token == NULL || size <= 0)
-	{
-		return NULL;
-	}
-
 	size_t len;
 	char *offset;
 
 	/* token not matched */
-	if(offset = strstr_igcase(src, token, 0), offset == 0)
+	if(offset = strstr_igcase(src, token, 0), offset == NULL)
 	{
 		return NULL;
 	}
@@ -168,125 +158,6 @@ char *url_decode(const char *str)
 	*s = '\0';
 
 	return ptr;
-}
-
-char *path_wildcard(const char *str)
-{
-    	if(str == NULL)
-	{
-		return NULL;
-	}
-
-	char *path, *filename, *offset, *realpath;
-
-	/* file path should begin with '/' or '~/' */
-	if(!(strstr(str, "~/") == str || strchr(str, '/') == str))
-	{
-		//_ERROR("%s, is not a path or filename.", str);
-		return NULL;
-	}
-
-	offset = strrchr(str, '/');
-
-	/* end with '/', not container file name */
-	if(offset - str == strlen(str) - 1)
-	{
-		return path_real(str, NULL);
-	}
-
-	path = calloc(strlen(str), 1);
-	strncpy(path, str, offset - str);
-
-	filename = calloc(strlen(str), 1);
-	strcpy(filename, offset + 1);
-
-	/* generate full path name */
-	realpath = path_real(path, filename);
-
-	free(path);
-	free(filename);
-	return realpath;
-}
-
-char *path_real(const char *path, char *filename)
-{    
-    	char *offset, *real, *home;
-    
-	if(path == NULL)
-	{
-		return NULL;
-	}
-
-	if(filename)
-	{
-		if(*filename == '/' || *(filename + strlen(filename) - 1) == '/')
-		{
-			/* invalide file name */
-			return NULL;
-		}
-	}
-	else 
-		filename = "";
-
-	offset = strstr(path, "~/");
-
-	/* path begin with '~/' */
-	if(offset == path)
-	{
-		if(home = getenv("HOME"), home == NULL)
-		{
-			return NULL;
-		}
-
-		real = calloc(strlen(home) + strlen(path) + strlen(filename), 1);
-
-		strcpy(real, home);
-
-		if(*(real + strlen(real) - 1) != '/')
-		{
-			*(real + strlen(real)) = '/';
-		}
-
-		/* +2 skip '~/' */
-		//strcpy(real + strlen(real), path + 2);
-		strcat(real, path + 2);
-
-		if(*(real + strlen(real) - 1) != '/')
-		{
-			*(real + strlen(real)) = '/';
-		}
-
-		//strcpy(real + strlen(real), filename);
-		strcat(real, filename);
-	}
-	else if(offset == NULL)
-	{
-		if(*path != '/')
-		{
-			/* invalide file path */
-			return NULL;
-		}
-
-		real = calloc(strlen(path) + strlen(filename) + 2, 1);
-
-		strcpy(real, path);
-
-		if(*(real + strlen(real) - 1) != '/')
-		{
-			*(real + strlen(real)) = '/';
-		}
-
-		//strcpy(real + strlen(real), filename);
-		strcat(real, filename);
-	}
-	/* invalid path */
-	else
-	{
-		/* invalide file path */
-		return NULL;
-	}
-
-	return real;
 }
 
 char **dir_search(const char *path, const char *pattern, int depth, int max_matched)

@@ -135,7 +135,6 @@ void http_res_free(struct http_res *res)
 	free(res);
 }
 
-/* --- PRIVATE --- */
 static char *http_res_gethdr(int connfd, char **tail, unsigned long *tail_len)
 {
     	int num_bytes, read_bytes = 0;
@@ -222,7 +221,7 @@ static int http_res_attr(char *hdr, struct http_res *res)
 	res->type = NULL;
 	res->cookie = NULL;
 
-	while(walk = strstr_ln(walk, line, sizeof line, "\r\n"), walk)
+	while(walk = strstr_token(walk, "\r\n", line, 512), walk)
 	{
 		/* the first line is the response status line */
 		if(res->status_code == 0)

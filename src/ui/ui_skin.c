@@ -254,7 +254,7 @@ struct ui_skin_entity **ui_skin_load_all()
 	xmlDoc *doc;
 	xmlNode *root;
 
-	skin_path = cfg_get_skinpath();
+	skin_path = (char *)cfg_get_skinpath();
 
 	skins = dir_search(skin_path, "^skin.xml$", 1, 0);
 

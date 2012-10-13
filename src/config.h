@@ -38,27 +38,27 @@ struct position
 	int y;
 };
 
-void cfg_load(const char * const filename);
+void cfg_load(const char * filename);
 
 void cfg_refresh();
 
-char *cfg_get_logfile();
+const char *cfg_get_logfile();
 
-char *cfg_get_coverpath();
+const char *cfg_get_coverpath();
 
-char *cfg_get_musicpath();
+const char *cfg_get_musicpath();
 
-char *cfg_get_skinpath();
+const char *cfg_get_skinpath();
 
-char *cfg_get_skinname();
+const char *cfg_get_skinname();
 
-char *cfg_get_rule();
+const char *cfg_get_rule();
 
 struct position const *cfg_get_pos(struct position *pos);
 
 unsigned int cfg_get_pos_lock();
 
-void cfg_set_postion(const struct position * const pos);
+void cfg_set_postion(const struct position *pos);
 
 void cfg_set_postion_lock();
 
@@ -67,6 +67,6 @@ int cfg_get_debug();
 void cfg_set_debug();
 
 /* change skin */
-void cfg_set_skinname(const char * const skin_name);
+void cfg_set_skinname(const char *skin_name);
 
 #endif

@@ -20,7 +20,7 @@
 
 static char *http_get_cookie(int conn, struct http_req *req);
 
-char *http_getfile(char *url, char *fname, enum http_flags flag)
+char *http_getfile(const char *url, const char *fname, enum http_flags flag)
 {
     	if_null_return_null(url);
 	if_null_return_null(fname);

@@ -23,7 +23,7 @@
 
 static int http_do_fetch(int connfd, char *fullname, struct http_res *res);
 
-char *http_fetch(int connfd, struct http_res *res, char *filename)
+char *http_fetch(int connfd, struct http_res *res, const char *filename)
 {
 	if(res == NULL || res->type == NULL || res->type->ext == NULL || filename == NULL)
 	{

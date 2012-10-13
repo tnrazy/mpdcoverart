@@ -158,10 +158,10 @@ struct file_type cxt_types[] =
 #endif
 
 /* generator the request header */
-typedef char *(*hdr_gen)(char *host, char *uri, enum http_cxt_types type, char *data);
+typedef char *(*hdr_gen)(const char *host, const char *uri, enum http_cxt_types type, char *data);
 
 /* create a request */
-struct http_req *http_compile(char *url, enum http_mtd_types method, hdr_gen func,
+struct http_req *http_compile(const char *url, enum http_mtd_types method, hdr_gen func,
                                             enum http_cxt_types type,
                                             char *data);
 
@@ -171,7 +171,7 @@ void http_closeconn(int connfd);
 
 struct http_res *http_exec(int connfd, struct http_req *req, unsigned int timeout);
 
-char *http_fetch(int connfd, struct http_res *res, char *filename);
+char *http_fetch(int connfd, struct http_res *res, const char *filename);
 
 /* clean */
 void http_req_free(struct http_req *ptr);
@@ -184,10 +184,10 @@ void http_pr_req(struct http_req *req);
 void http_pr_res(struct http_res *res);
 
 /* header generator */
-char *http_req_hdr_hdr(char *host, char *uri, enum http_cxt_types type, char *data);
+char *http_req_hdr_hdr(const char *host, const char *uri, enum http_cxt_types type, char *data);
 
-char *http_req_hdr_get(char *host, char *uri, enum http_cxt_types type, char *data);
+char *http_req_hdr_get(const char *host, const char *uri, enum http_cxt_types type, char *data);
 
-char *http_getfile(char *url, char *fname, enum http_flags flag);
+char *http_getfile(const char *url, const char *fname, enum http_flags flag);
 
 #endif

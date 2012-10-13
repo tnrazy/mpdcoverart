@@ -27,12 +27,12 @@ static int http_url_check(char const *url);
 /*
  * Generate a common request header
  * */
-static char *http_req_hdr_comm(enum http_mtd_types method, char *host, char *uri);
+static char *http_req_hdr_comm(enum http_mtd_types method, const char *host, const char *uri);
 
 /* 
  * new a struct of http_req 
  * */
-struct http_req *http_compile(char *url, enum http_mtd_types method, hdr_gen func,
+struct http_req *http_compile(const char *url, enum http_mtd_types method, hdr_gen func,
                                             enum http_cxt_types type,
                                             char *data)
 {
@@ -123,12 +123,12 @@ struct http_req *http_compile(char *url, enum http_mtd_types method, hdr_gen fun
  * generate the request header
  * wrappr of req_hdr_comm
  * */
-char *http_req_hdr_hdr(char *host, char *uri, enum http_cxt_types type, char *data)
+char *http_req_hdr_hdr(const char *host, const char *uri, enum http_cxt_types type, char *data)
 {
     	return http_req_hdr_comm(HTTP_MTD_HEAD, host, uri);
 }
 
-char *http_req_hdr_get(char *host, char *uri, enum http_cxt_types type, char *data)
+char *http_req_hdr_get(const char *host, const char *uri, enum http_cxt_types type, char *data)
 {
     	char *hdr = http_req_hdr_comm(HTTP_MTD_GET, host, uri);
 
@@ -219,7 +219,7 @@ static int http_url_check(char const *url)
 }
 
 
-static char *http_req_hdr_comm(enum http_mtd_types method, char *host, char *uri)
+static char *http_req_hdr_comm(enum http_mtd_types method, const char *host, const char *uri)
 {
     	char *tmp = req_hdr[method], *hdr;
 

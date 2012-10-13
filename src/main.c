@@ -30,7 +30,7 @@ static void test_config(const char *filename);
 
 static void sig_exit(int signo);
 
-static void daemonize(char *file_err, char *file_log);
+static void daemonize(const char *file_err, const char *file_log);
 
 int main(int argc, const char **argv)
 {
@@ -89,23 +89,14 @@ int main(int argc, const char **argv)
 	_DEBUG("config file name: %s", cfg_fileanme);
 	cfg_load(cfg_fileanme);
 
-	char *log_file, *skin_name;
-
-	log_file = cfg_get_logfile();
-
 	if(!cfg_get_debug())
 	{
 		printf("Run mpdcoverart in daemon ...\n");
 		
-		daemonize(log_file, NULL);
+		daemonize(cfg_get_logfile(), NULL);
 	}
 
-	skin_name = cfg_get_skinname();
-
-	ui_skin_load(skin_name);
-
-	free(log_file);
-	free(skin_name);
+	ui_skin_load(cfg_get_skinname());
 
 	ui_load();
 
@@ -157,7 +148,7 @@ static void sig_exit(int signo)
 	exit(EXIT_SUCCESS);
 }
 
-static void daemonize(char *file_err, char *file_log)
+static void daemonize(const char *file_err, const char *file_log)
 {
 	struct sigaction sa;
 

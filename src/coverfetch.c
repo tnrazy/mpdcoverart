@@ -52,11 +52,12 @@ static char *getcover_local(const char *uri, const char *artist, const char *tit
 
 static char *getcover_network(const char *uri, const char *artist, const char *title, const char *album, coverfetch fetch);
 
-static char *getcover_network_v(coverfetch fetch, char *path, const char *format, ...);
+static char *getcover_network_v(coverfetch fetch, const char *path, const char *format, ...);
 
 char *getcover(const char *uri, const char *artist, const char *title, const char *album, coverfetch fetch)
 {
-    	char *cover = NULL, *cover_path, *music_path, *cmd, newname[FILENAME_MAX];
+    	char *cover = NULL, *cmd, newname[FILENAME_MAX];
+    	const char *cover_path, *music_path;
 
 	if(cover = getcover_id3v2(uri), cover)
 	{
@@ -93,8 +94,6 @@ char *getcover(const char *uri, const char *artist, const char *title, const cha
 
 			strcat(newname, DEF_COVER_NAME);
 
-			free(music_path);
-
 			/* make command without error output */
 			cmd = calloc(strlen(cover) + strlen(newname) + 30, 1);
 			sprintf(cmd, "mv \"%s\" \"%s\" 2> /dev/null", cover, newname);
@@ -114,8 +113,6 @@ char *getcover(const char *uri, const char *artist, const char *title, const cha
 		{
 			_INFO("Rename \"%s\" ==> \"%s\".", cover, newname);
 		}
-
-		free(cover_path);
 	}
 
 	return cover ? strdup(newname) : cover;
@@ -123,7 +120,8 @@ char *getcover(const char *uri, const char *artist, const char *title, const cha
 
 static char *getcover_network(const char *uri, const char *artist, const char *title, const char *album, coverfetch fetch)
 {
-    	char *cover_path, *cover, key[1024];
+    	char *cover, key[1024];
+    	const char *cover_path;
 
 	cover_path = cfg_get_coverpath();
 
@@ -131,7 +129,6 @@ static char *getcover_network(const char *uri, const char *artist, const char *t
 	{
 		if(cover = getcover_network_v(fetch, cover_path, "%s %s %s", artist, title, album), cover)
 		{
-			free(cover_path);
 			return cover;
 		}
 	}
@@ -140,7 +137,6 @@ static char *getcover_network(const char *uri, const char *artist, const char *t
 	{
 		if(cover = getcover_network_v(fetch, cover_path, "%s %s", artist, title), cover)
 		{
-			free(cover_path);
 			return cover;
 		}
 	}
@@ -149,7 +145,6 @@ static char *getcover_network(const char *uri, const char *artist, const char *t
 	{
 		if(cover = getcover_network_v(fetch, cover_path, "%s %s", artist, album), cover)
 		{
-			free(cover_path);
 			return cover;
 		}
 	}
@@ -159,7 +154,6 @@ static char *getcover_network(const char *uri, const char *artist, const char *t
 
 		if(cover = getcover_network_v(fetch, cover_path, "%s", artist), cover)
 		{
-			free(cover_path);
 			return cover;
 		}
 	}
@@ -189,16 +183,14 @@ static char *getcover_network(const char *uri, const char *artist, const char *t
 
 		if(cover = getcover_network_v(fetch, cover_path, "%s", key), cover)
 		{
-			free(cover_path);
 			return cover;
 		}
 	}
 
-	free(cover_path);
 	return NULL;
 }
 
-static char *getcover_network_v(coverfetch fetch, char *path, const char *format, ...)
+static char *getcover_network_v(coverfetch fetch, const char *path, const char *format, ...)
 {
     	char key[1024];
 
@@ -212,10 +204,10 @@ static char *getcover_network_v(coverfetch fetch, char *path, const char *format
 
 static char *getcover_local(const char *uri, const char *artist, const char *title)
 {
-    	char *music_path, *cover_path, *tmp, rule[512], pattern[1024];
+    	const char *music_path, *cover_path;
 
 	/* search result */
-    	char **cover_list = NULL;
+    	char **cover_list = NULL, *tmp, rule[512], pattern[1024];
 
 	/* get image from the .cover */
 	if(artist && title)
@@ -238,11 +230,8 @@ static char *getcover_local(const char *uri, const char *artist, const char *tit
 			tmp = *cover_list;
 
 			free(cover_list);
-			free(cover_path);
 			return tmp;
 		}
-
-		free(cover_path);
 	}
 
 	/* search cover from music path */
@@ -257,14 +246,13 @@ static char *getcover_local(const char *uri, const char *artist, const char *tit
 	}
 
 	/* get cover from the music path */
-	for(char *list = cfg_get_rule(), *buf = list; buf;)
+	for(const char *list = cfg_get_rule(), *buf = list; buf;)
 	{
 		_DEBUG("Ruelist: %s", list);
-		buf = strstr_ln(buf, rule, sizeof rule, ";");
+		buf = strstr_token(buf, ";", rule, sizeof rule);
 
 		if(buf == NULL)
 		{
-			free(list);
 			break;
 		}
 
@@ -277,14 +265,11 @@ static char *getcover_local(const char *uri, const char *artist, const char *tit
 		{
 			tmp = *cover_list;
 
-			free(list);
 			free(cover_list);
-			free(music_path);
 			return tmp;
 		}
 	}
 
-	free(music_path);
 	return NULL;
 }
 
@@ -299,7 +284,8 @@ static unsigned long id3_realsize(const char *size)
 
 static char *getcover_id3v2(const char *uri)
 {
-	char *music_path, *cover_path, abspath[FILENAME_MAX], cover[FILENAME_MAX];
+	const char *music_path, *cover_path;
+	char abspath[FILENAME_MAX], cover[FILENAME_MAX];
 	FILE *fp = NULL;
 	struct id3_header header;
 
@@ -313,9 +299,6 @@ static char *getcover_id3v2(const char *uri)
 
 	if(access(cover, F_OK) == 0)
 	{
-		free(music_path);
-		free(cover_path);
-
 		return strdup(cover);
 	}
 
@@ -356,8 +339,6 @@ static char *getcover_id3v2(const char *uri)
 	imlib_free_image();
 
 	fclose(fp);
-	free(music_path);
-	free(cover_path);
 
 	return strdup(cover);
 
@@ -427,8 +408,6 @@ static char *getcover_id3v2(const char *uri)
 	***/
 out:
 	fclose(fp);
-	free(music_path);
-	free(cover_path);
 
 	return NULL;
 }
