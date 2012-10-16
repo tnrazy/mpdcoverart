@@ -237,7 +237,7 @@ static const char *cfg_get(enum cfg_keys cfg_key)
 		return NULL;
 	}
 
-	return strdup(cfgs[cfg_key].value);
+	return cfgs[cfg_key].value;
 }
 
 static void cfg_set(enum cfg_keys cfg_key, const char *value)
